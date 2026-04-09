@@ -12,557 +12,276 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    /* ── Core Background Palette (from your swatches) ── */
-    --bg:       #f5f2ec;       /* warm off-white base */
-    --bg2:      #eeeae1;       /* slightly warmer */
-    --bg3:      #e8e3d8;       /* light dun */
-
-    /* ── Surface / Card Colors ── */
-    --surface:  #ffffff;       /* pure white cards */
-    --surface2: #f0ede6;       /* bone — E1DBCA family */
-
-    /* ── Border Colors ── */
-    --border:   rgba(132, 140, 103, 0.15);   /* sage-tinted soft border */
-    --border2:  rgba(132, 140, 103, 0.28);   /* slightly more visible */
-
-    /* ── Typography ── */
-    --text:     #2c3320;       /* deep ebony-green for primary text */
-    --text2:    #5c6249;       /* Ebony — 5C6249 for secondary */
-    --text3:    #9ba186;       /* Sage — 9BA186 for muted */
-
-    /* ── Brand Accent Colors ── */
-    --accent:   #848c67;       /* Reseda green — 848C67 (primary CTA) */
-    --accent2:  #9ba186;       /* Sage — 9BA186 (secondary accent) */
-    --accent3:  #5c6249;       /* Ebony — 5C6249 (deep accent / success) */
-
-    /* ── Utility ── */
-    --gold:     #b89a5a;       /* warm brass — premium feel */
-    --danger:   #c0614a;       /* muted terracotta for errors */
-
-    /* ── Glow / Shadow (warm green-tinted) ── */
-    --glow:     rgba(132, 140, 103, 0.25);
-    --glow2:    rgba(155, 161, 134, 0.18);
-
-    /* ── Extra named palette refs ── */
-    --dun:      #c5bea9;
-    --bone:     #e1dbca;
-    --sage:     #9ba186;
-    --reseda:   #848c67;
-    --ebony:    #5c6249;
+    --bg:#f5f2ec; --bg2:#eeeae1; --bg3:#e8e3d8;
+    --surface:#ffffff; --surface2:#f0ede6;
+    --border:rgba(132,140,103,0.15); --border2:rgba(132,140,103,0.28);
+    --text:#2c3320; --text2:#5c6249; --text3:#9ba186;
+    --accent:#848c67; --accent2:#9ba186; --accent3:#5c6249;
+    --gold:#b89a5a; --danger:#c0614a;
+    --glow:rgba(132,140,103,0.25); --glow2:rgba(155,161,134,0.18);
+    --dun:#c5bea9; --bone:#e1dbca; --sage:#9ba186; --reseda:#848c67; --ebony:#5c6249;
   }
-
   html { scroll-behavior: smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Outfit',sans-serif; font-size:16px; line-height:1.6; min-height:100vh; overflow-x:hidden; }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:var(--bg2); }
+  ::-webkit-scrollbar-thumb { background:var(--reseda); border-radius:3px; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes float { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-10px)} }
+  @keyframes glow-pulse { 0%,100%{box-shadow:0 0 20px var(--glow)} 50%{box-shadow:0 0 40px var(--glow),0 0 80px var(--glow2)} }
+  @keyframes slideIn { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
+  @keyframes rotate3d { from{transform:rotateY(0deg)} to{transform:rotateY(360deg)} }
+  .animate-fadeUp{animation:fadeUp 0.6s ease forwards}
+  .animate-fadeIn{animation:fadeIn 0.4s ease forwards}
+  .animate-float{animation:float 4s ease-in-out infinite}
+  .animate-spin{animation:spin 1s linear infinite}
+  .animate-pulse{animation:pulse 2s ease infinite}
+  .animate-glow{animation:glow-pulse 3s ease infinite}
+  .stagger-1{animation-delay:0.1s;opacity:0;animation-fill-mode:forwards}
+  .stagger-2{animation-delay:0.2s;opacity:0;animation-fill-mode:forwards}
+  .stagger-3{animation-delay:0.3s;opacity:0;animation-fill-mode:forwards}
+  .stagger-4{animation-delay:0.4s;opacity:0;animation-fill-mode:forwards}
+  .stagger-5{animation-delay:0.5s;opacity:0;animation-fill-mode:forwards}
+  .stagger-6{animation-delay:0.6s;opacity:0;animation-fill-mode:forwards}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+  .section{padding:80px 0}
+  .glass{background:rgba(255,255,255,0.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:20px;box-shadow:0 4px 24px rgba(92,98,73,0.08)}
+  .gradient-text{background:linear-gradient(135deg,#5c6249,#848c67,#9ba186);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .gradient-text-gold{background:linear-gradient(135deg,#b89a5a,#d4b87a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:linear-gradient(135deg,#5c6249,#848c67);color:#f5f2ec;border:none;border-radius:14px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.3s ease;box-shadow:0 8px 28px rgba(92,98,73,0.30);text-decoration:none;letter-spacing:0.01em}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(92,98,73,0.38);background:linear-gradient(135deg,#6b7357,#959f77)}
+  .btn-primary:active{transform:translateY(0)}
+  .btn-secondary{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--surface);color:var(--text2);border:1.5px solid var(--border2);border-radius:14px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all 0.3s ease;box-shadow:0 2px 8px rgba(92,98,73,0.08)}
+  .btn-secondary:hover{background:var(--bone);border-color:var(--reseda);color:var(--ebony);box-shadow:0 4px 16px rgba(92,98,73,0.14)}
+  .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--text2);border:none;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;cursor:pointer;transition:all 0.2s}
+  .btn-ghost:hover{color:var(--ebony);background:var(--surface2)}
+  .input-field{width:100%;background:var(--surface);border:1.5px solid var(--border2);border-radius:12px;padding:14px 16px;color:var(--text);font-family:'Outfit',sans-serif;font-size:15px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;box-shadow:0 1px 4px rgba(92,98,73,0.06)}
+  .input-field:focus{border-color:var(--reseda);box-shadow:0 0 0 3px rgba(132,140,103,0.18)}
+  .input-field::placeholder{color:var(--text3)}
+  .label{display:block;font-size:12px;font-weight:700;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em}
+  .card{background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:24px;transition:all 0.3s ease;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(92,98,73,0.07)}
+  .card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1.5px;background:linear-gradient(135deg,transparent,rgba(132,140,103,0.4),transparent);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.3s}
+  .card:hover::before{opacity:1}
+  .card:hover{border-color:rgba(132,140,103,0.5);transform:translateY(-4px);box-shadow:0 20px 48px rgba(92,98,73,0.16),0 0 0 1px rgba(132,140,103,0.25)}
+  .card.selected{border-color:var(--reseda);background:rgba(132,140,103,0.06);box-shadow:0 0 0 2px var(--reseda),0 16px 48px rgba(132,140,103,0.20)}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+  .badge-purple{background:rgba(132,140,103,0.12);color:#5c6249;border:1px solid rgba(132,140,103,0.30)}
+  .badge-blue{background:rgba(155,161,134,0.15);color:#848c67;border:1px solid rgba(155,161,134,0.32)}
+  .badge-green{background:rgba(92,98,73,0.10);color:#3d4232;border:1px solid rgba(92,98,73,0.25)}
+  .badge-gold{background:rgba(184,154,90,0.12);color:#9a7a38;border:1px solid rgba(184,154,90,0.28)}
+  .progress-bar{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--ebony),var(--reseda));border-radius:2px;transition:width 0.5s ease}
+  .toast{position:fixed;bottom:30px;right:30px;z-index:9999;background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:16px 24px;display:flex;align-items:center;gap:12px;box-shadow:0 20px 60px rgba(92,98,73,0.20);animation:slideIn 0.3s ease forwards;max-width:380px}
+  .toast.success{border-color:rgba(92,98,73,0.45)}
+  .toast.error{border-color:rgba(192,97,74,0.45)}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--dun),transparent);margin:24px 0}
+  .chip{padding:8px 18px;border-radius:30px;border:1.5px solid var(--border2);font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;background:var(--surface);color:var(--text2);box-shadow:0 1px 4px rgba(92,98,73,0.06)}
+  .chip:hover{border-color:var(--reseda);color:var(--ebony);background:rgba(132,140,103,0.08)}
+  .chip.active{border-color:var(--reseda);color:var(--ebony);background:rgba(132,140,103,0.14);font-weight:600}
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 0;background:rgba(245,242,236,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border2);box-shadow:0 2px 16px rgba(92,98,73,0.07)}
+  .hero-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .hero-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .grid-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
+  @media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr}.grid-auto{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}.hide-mobile{display:none}}
+  @media(max-width:480px){.grid-2,.grid-4{grid-template-columns:1fr}}
+  .nest-grid{display:grid;gap:3px;padding:16px;background:var(--bg2);border-radius:12px;border:1px solid var(--border)}
+  .nest-cell{aspect-ratio:1;border-radius:4px;border:1px solid rgba(132,140,103,0.25)}
+  .nest-cell.filled{background:linear-gradient(135deg,var(--reseda),var(--sage))}
+  .nest-cell.empty{background:rgba(192,97,74,0.08);border-color:rgba(192,97,74,0.18)}
+  .spinner{width:48px;height:48px;border:3px solid var(--surface2);border-top-color:var(--reseda);border-radius:50%;animation:spin 0.8s linear infinite}
+  .toggle-wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 4px rgba(92,98,73,0.05)}
+  .toggle-wrap:hover{border-color:var(--border2);background:var(--bg2)}
+  .toggle-wrap.on{border-color:rgba(92,98,73,0.45);background:rgba(132,140,103,0.06)}
+  .toggle{width:40px;height:22px;background:var(--dun);border-radius:11px;position:relative;transition:background 0.2s;flex-shrink:0}
+  .toggle.on{background:var(--reseda)}
+  .toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:white;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.15)}
+  .toggle.on::after{transform:translateX(18px)}
+  .step-dot{width:10px;height:10px;border-radius:50%;background:var(--bone);border:2px solid var(--dun);transition:all 0.3s}
+  .step-dot.active{background:var(--reseda);border-color:var(--reseda);box-shadow:0 0 10px var(--glow);transform:scale(1.3)}
+  .step-dot.done{background:var(--ebony);border-color:var(--ebony)}
+  .color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.2s;position:relative;box-shadow:0 2px 8px rgba(92,98,73,0.15)}
+  .color-swatch.selected{border-color:var(--ebony);transform:scale(1.2);box-shadow:0 0 0 2px var(--reseda),0 4px 12px rgba(92,98,73,0.25)}
+  .stat-item{text-align:center;padding:20px}
+  .stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:800;line-height:1;color:var(--ebony)}
+  .stat-label{font-size:12px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:0.10em;font-weight:600}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── Scrollbar ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg2); }
-  ::-webkit-scrollbar-thumb { background: var(--reseda); border-radius: 3px; }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.5; }
-  }
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-  @keyframes shimmer {
-    0%   { background-position: -200% center; }
-    100% { background-position:  200% center; }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-10px); }
-  }
-  @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 20px var(--glow); }
-    50%       { box-shadow: 0 0 40px var(--glow), 0 0 80px var(--glow2); }
-  }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-
-  .animate-fadeUp  { animation: fadeUp  0.6s ease forwards; }
-  .animate-fadeIn  { animation: fadeIn  0.4s ease forwards; }
-  .animate-float   { animation: float   4s ease-in-out infinite; }
-  .animate-spin    { animation: spin    1s linear infinite; }
-  .animate-pulse   { animation: pulse   2s ease infinite; }
-  .animate-glow    { animation: glow-pulse 3s ease infinite; }
-
-  /* ── Staggered animations ── */
-  .stagger-1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
-  .stagger-2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
-  .stagger-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
-  .stagger-4 { animation-delay: 0.4s; opacity: 0; animation-fill-mode: forwards; }
-  .stagger-5 { animation-delay: 0.5s; opacity: 0; animation-fill-mode: forwards; }
-  .stagger-6 { animation-delay: 0.6s; opacity: 0; animation-fill-mode: forwards; }
-
-  /* ── Layout ── */
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .section   { padding: 80px 0; }
-
-  /* ── Glass Card (light frosted) ── */
-  .glass {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border2);
-    border-radius: 20px;
-    box-shadow: 0 4px 24px rgba(92, 98, 73, 0.08);
-  }
-
-  /* ── Gradient Text ── */
-  .gradient-text {
-    background: linear-gradient(135deg, #5c6249, #848c67, #9ba186);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .gradient-text-gold {
-    background: linear-gradient(135deg, #b89a5a, #d4b87a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* ── Buttons ── */
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 36px;
-    background: linear-gradient(135deg, #5c6249, #848c67);
-    color: #f5f2ec;
-    border: none;
-    border-radius: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 28px rgba(92, 98, 73, 0.30);
-    text-decoration: none;
-    letter-spacing: 0.01em;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 36px rgba(92, 98, 73, 0.38);
-    background: linear-gradient(135deg, #6b7357, #959f77);
-  }
-  .btn-primary:active { transform: translateY(0); }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
+  /* ── 3D CONFIGURATOR STYLES ── */
+  .configurator-wrap {
     background: var(--surface);
-    color: var(--text2);
     border: 1.5px solid var(--border2);
-    border-radius: 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(92,98,73,0.12);
+    margin-bottom: 40px;
+  }
+  .configurator-header {
+    background: linear-gradient(135deg, #5c6249 0%, #848c67 100%);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .configurator-body {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    min-height: 620px;
+  }
+  @media(max-width:900px){.configurator-body{grid-template-columns:1fr}}
+  .viewer-panel {
+    background: linear-gradient(160deg, #f0ede6 0%, #e8e3d8 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-right: 1px solid var(--border);
+  }
+  .controls-panel {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: 620px;
+    background: var(--surface);
+  }
+  .chair-type-card {
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 12px 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(92, 98, 73, 0.08);
-  }
-  .btn-secondary:hover {
-    background: var(--bone);
-    border-color: var(--reseda);
-    color: var(--ebony);
-    box-shadow: 0 4px 16px rgba(92, 98, 73, 0.14);
-  }
-
-  .btn-ghost {
-    display: inline-flex;
+    transition: all 0.25s;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
-    background: transparent;
-    color: var(--text2);
-    border: none;
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
+    text-align: center;
   }
-  .btn-ghost:hover {
-    color: var(--ebony);
-    background: var(--surface2);
-  }
-
-  /* ── Inputs ── */
-  .input-field {
-    width: 100%;
-    background: var(--surface);
-    border: 1.5px solid var(--border2);
-    border-radius: 12px;
-    padding: 14px 16px;
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-size: 15px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    outline: none;
-    box-shadow: 0 1px 4px rgba(92, 98, 73, 0.06);
-  }
-  .input-field:focus {
+  .chair-type-card:hover {
     border-color: var(--reseda);
-    box-shadow: 0 0 0 3px rgba(132, 140, 103, 0.18);
+    background: rgba(132,140,103,0.06);
+    transform: translateY(-2px);
   }
-  .input-field::placeholder { color: var(--text3); }
-
-  select.input-field option { background: var(--surface); color: var(--text); }
-
-  /* ── Labels ── */
-  .label {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text3);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  /* ── Cards ── */
-  .card {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 20px;
-    padding: 24px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(92, 98, 73, 0.07);
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 1.5px;
-    background: linear-gradient(135deg, transparent, rgba(132, 140, 103, 0.4), transparent);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .card:hover::before { opacity: 1; }
-  .card:hover {
-    border-color: rgba(132, 140, 103, 0.5);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 48px rgba(92, 98, 73, 0.16), 0 0 0 1px rgba(132, 140, 103, 0.25);
-  }
-  .card.selected {
+  .chair-type-card.active {
     border-color: var(--reseda);
-    background: rgba(132, 140, 103, 0.06);
-    box-shadow: 0 0 0 2px var(--reseda), 0 16px 48px rgba(132, 140, 103, 0.20);
+    background: rgba(132,140,103,0.10);
+    box-shadow: 0 0 0 3px rgba(132,140,103,0.18);
   }
-
-  /* ── Badge ── */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .badge-purple {
-    background: rgba(132, 140, 103, 0.12);
-    color: #5c6249;
-    border: 1px solid rgba(132, 140, 103, 0.30);
-  }
-  .badge-blue {
-    background: rgba(155, 161, 134, 0.15);
-    color: #848c67;
-    border: 1px solid rgba(155, 161, 134, 0.32);
-  }
-  .badge-green {
-    background: rgba(92, 98, 73, 0.10);
-    color: #3d4232;
-    border: 1px solid rgba(92, 98, 73, 0.25);
-  }
-  .badge-gold {
-    background: rgba(184, 154, 90, 0.12);
-    color: #9a7a38;
-    border: 1px solid rgba(184, 154, 90, 0.28);
-  }
-
-  /* ── Progress Bar ── */
-  .progress-bar {
-    height: 4px;
-    background: var(--surface2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--ebony), var(--reseda));
-    border-radius: 2px;
-    transition: width 0.5s ease;
-  }
-
-  /* ── Toast ── */
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 9999;
-    background: var(--surface);
-    border: 1.5px solid var(--border2);
-    border-radius: 14px;
-    padding: 16px 24px;
+  .chair-type-thumb {
+    width: 60px;
+    height: 50px;
+    border-radius: 8px;
+    background: var(--bg2);
     display: flex;
     align-items: center;
-    gap: 12px;
-    box-shadow: 0 20px 60px rgba(92, 98, 73, 0.20);
-    animation: slideIn 0.3s ease forwards;
-    max-width: 380px;
+    justify-content: center;
+    font-size: 24px;
   }
-  .toast.success { border-color: rgba(92, 98, 73, 0.45); }
-  .toast.error   { border-color: rgba(192, 97, 74, 0.45); }
-
-  /* ── Divider ── */
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--dun), transparent);
-    margin: 24px 0;
+  .dim-slider-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
   }
-
-  /* ── Cost Row ── */
-  .cost-row {
+  .dim-slider-row label {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
   }
-  .cost-row:last-child { border-bottom: none; }
-
-  /* ── Chip Selector ── */
-  .chip {
-    padding: 8px 18px;
-    border-radius: 30px;
+  .dim-slider-row label span {
+    color: var(--reseda);
+    font-weight: 700;
+  }
+  .dim-slider-row input[type=range] {
+    -webkit-appearance: none;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--bg3);
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    accent-color: var(--reseda);
+  }
+  .material-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
     border: 1.5px solid var(--border2);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
     background: var(--surface);
     color: var(--text2);
-    box-shadow: 0 1px 4px rgba(92, 98, 73, 0.06);
-  }
-  .chip:hover {
-    border-color: var(--reseda);
-    color: var(--ebony);
-    background: rgba(132, 140, 103, 0.08);
-  }
-  .chip.active {
-    border-color: var(--reseda);
-    color: var(--ebony);
-    background: rgba(132, 140, 103, 0.14);
-    font-weight: 600;
-  }
-
-  /* ── Navbar ── */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 18px 0;
-    background: rgba(245, 242, 236, 0.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border2);
-    box-shadow: 0 2px 16px rgba(92, 98, 73, 0.07);
-  }
-
-  /* ── Hero Background ── */
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .hero-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.18;
-  }
-
-  /* ── Grid ── */
-  .grid-2    { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .grid-3    { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .grid-4    { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-
-  @media (max-width: 768px) {
-    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
-    .grid-auto { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-    .hide-mobile { display: none; }
-  }
-  @media (max-width: 480px) {
-    .grid-2, .grid-4 { grid-template-columns: 1fr; }
-  }
-
-  /* ── Nesting Grid ── */
-  .nest-grid {
-    display: grid;
-    gap: 3px;
-    padding: 16px;
-    background: var(--bg2);
-    border-radius: 12px;
-    border: 1px solid var(--border);
-  }
-  .nest-cell {
-    aspect-ratio: 1;
-    border-radius: 4px;
-    border: 1px solid rgba(132, 140, 103, 0.25);
-  }
-  .nest-cell.filled { background: linear-gradient(135deg, var(--reseda), var(--sage)); }
-  .nest-cell.empty  { background: rgba(192, 97, 74, 0.08); border-color: rgba(192, 97, 74, 0.18); }
-
-  /* ── Loading Spinner ── */
-  .spinner {
-    width: 48px;
-    height: 48px;
-    border: 3px solid var(--surface2);
-    border-top-color: var(--reseda);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  /* ── Feature Toggle ── */
-  .toggle-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 1px 4px rgba(92, 98, 73, 0.05);
-  }
-  .toggle-wrap:hover     { border-color: var(--border2); background: var(--bg2); }
-  .toggle-wrap.on        { border-color: rgba(92, 98, 73, 0.45); background: rgba(132, 140, 103, 0.06); }
-
-  .toggle {
-    width: 40px;
-    height: 22px;
-    background: var(--dun);
-    border-radius: 11px;
-    position: relative;
-    transition: background 0.2s;
-    flex-shrink: 0;
-  }
-  .toggle.on { background: var(--reseda); }
-  .toggle::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 16px;
-    height: 16px;
-    background: white;
-    border-radius: 50%;
-    transition: transform 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-  }
-  .toggle.on::after { transform: translateX(18px); }
-
-  /* ── Step Indicator Dots ── */
-  .step-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--bone);
-    border: 2px solid var(--dun);
-    transition: all 0.3s;
-  }
-  .step-dot.active {
-    background: var(--reseda);
-    border-color: var(--reseda);
-    box-shadow: 0 0 10px var(--glow);
-    transform: scale(1.3);
-  }
-  .step-dot.done {
-    background: var(--ebony);
-    border-color: var(--ebony);
-  }
-
-  /* ── Color Swatch ── */
-  .color-swatch {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 3px solid transparent;
-    transition: all 0.2s;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(92, 98, 73, 0.15);
-  }
-  .color-swatch.selected {
-    border-color: var(--ebony);
-    transform: scale(1.2);
-    box-shadow: 0 0 0 2px var(--reseda), 0 4px 12px rgba(92, 98, 73, 0.25);
-  }
-
-  /* ── Hero Stats ── */
-  .stat-item {
     text-align: center;
-    padding: 20px;
   }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1;
-    color: var(--ebony);
-  }
-  .stat-label {
+  .material-btn:hover { border-color: var(--reseda); color: var(--ebony); }
+  .material-btn.active { border-color: var(--reseda); background: rgba(132,140,103,0.12); color: var(--ebony); font-weight: 600; }
+  .viewer-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(245,242,236,0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 8px 16px;
+    border: 1px solid var(--border2);
     font-size: 12px;
     color: var(--text3);
-    margin-top: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.10em;
-    font-weight: 600;
+    white-space: nowrap;
   }
-  
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+  .config-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .price-tag {
+    background: linear-gradient(135deg, rgba(92,98,73,0.08), rgba(132,140,103,0.12));
+    border: 1px solid rgba(132,140,103,0.25);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .finish-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border2);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--surface);
+    color: var(--text2);
+  }
+  .finish-chip.active {
+    border-color: var(--reseda);
+    background: rgba(132,140,103,0.12);
+    color: var(--ebony);
+  }
 </style>
 </head>
 <body>
@@ -570,100 +289,568 @@
 <script type="text/babel">
 const { useState, useEffect, useRef, useCallback } = React;
 
-// ─── CONSTANTS ──────────────────────────────────────────────────────────────
-function Chair3D({ length, width, height, color }) {
-  const mountRef = React.useRef(null);
+// ── CHAIR 3D VIEWER ─────────────────────────────────────────────────────────
+function Chair3DViewer({ config }) {
+  const mountRef = useRef(null);
+  const sceneRef = useRef({});
 
-  React.useEffect(() => {
-    mountRef.current.innerHTML = "";
+  const getColorHex = (colorName) => {
+    const map = {
+      'Matte Black': '#1a1a1a', 'Glossy White': '#f0f0f0', 'Oak Wood': '#c47a35',
+      'Gun Metal': '#4a4e6a', 'Rose Gold': '#c87b6e', 'Chrome Silver': '#b8c0cc',
+      'Walnut': '#6b3a2a', 'Navy Blue': '#1e3a5f', 'Sage Green': '#7a9e7e',
+    };
+    return map[colorName] || '#848c67';
+  };
+
+  useEffect(() => {
+    if (!mountRef.current) return;
+    mountRef.current.innerHTML = '';
+
+    const W = mountRef.current.clientWidth || 400;
+    const H = 460;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#f5f2ec");
+    scene.background = null;
 
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-    camera.position.set(3, 3, 6);
-camera.lookAt(0, 0, 0);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    const width = mountRef.current.clientWidth;
-const height = 320;
+    const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 1000);
+    camera.position.set(2.8, 2.2, 4.5);
+    camera.lookAt(0, 0.5, 0);
 
-renderer.setSize(width, height);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     mountRef.current.appendChild(renderer.domElement);
 
-    // LIGHT
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 5, 5);
-    scene.add(light);
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xfff8f0, 0.8);
+    scene.add(ambientLight);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    dirLight.position.set(4, 8, 6);
+    dirLight.castShadow = true;
+    dirLight.shadow.camera.near = 0.1;
+    dirLight.shadow.camera.far = 50;
+    dirLight.shadow.camera.left = -5;
+    dirLight.shadow.camera.right = 5;
+    dirLight.shadow.camera.top = 5;
+    dirLight.shadow.camera.bottom = -5;
+    scene.add(dirLight);
 
-    // MATERIAL
-    const material = new THREE.MeshStandardMaterial({
-      color: new THREE.Color(color),
-      metalness: 0.5,
-      roughness: 0.5,
+    const fillLight = new THREE.DirectionalLight(0xe8f4f0, 0.5);
+    fillLight.position.set(-3, 2, -2);
+    scene.add(fillLight);
+
+    const rimLight = new THREE.DirectionalLight(0xfff0e0, 0.4);
+    rimLight.position.set(0, -2, -5);
+    scene.add(rimLight);
+
+    // Ground plane (shadow catcher)
+    const groundGeo = new THREE.PlaneGeometry(20, 20);
+    const groundMat = new THREE.ShadowMaterial({ opacity: 0.12 });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.01;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    const hex = getColorHex(config.color);
+
+    const metalness = config.material === 'Stainless Steel' ? 0.85 : config.material === 'Aluminum' ? 0.6 : 0.3;
+    const roughness = config.finish === 'Glossy' ? 0.1 : config.finish === 'Matte' ? 0.85 : 0.45;
+
+    const frameMat = new THREE.MeshStandardMaterial({ color: hex, metalness, roughness });
+
+    const cushionColor = config.cushionColor || '#c8b89a';
+    const cushionMat = new THREE.MeshStandardMaterial({
+      color: cushionColor, metalness: 0.0, roughness: 0.95,
     });
 
-    const l = length / 50;
-    const w = width / 50;
-    const h = height / 50;
+    const chairGroup = new THREE.Group();
 
-    // SEAT
-    const seat = new THREE.Mesh(
-      new THREE.BoxGeometry(l, 0.1, w),
-      material
-    );
-    seat.position.y = 0;
-    scene.add(seat);
+    // Scale from cm to scene units
+    const L = config.length / 60;
+    const W2 = config.width / 60;
+    const H2 = config.height / 60;
+    const legH = config.legHeight / 60;
 
-    // BACKREST
-    const back = new THREE.Mesh(
-      new THREE.BoxGeometry(l, h / 2, 0.08),
-      material
-    );
-    back.position.set(0, h / 4, -w / 2);
-    scene.add(back);
+    const buildChair = (type) => {
+      const parts = [];
+      const chairW = W2 * 0.9;
+      const chairD = L * 0.85;
+      const legThick = 0.055;
 
-    // LEGS
-    const legGeo = new THREE.BoxGeometry(0.08, h / 2, 0.08);
+      if (type === 'dining') {
+        // Seat
+        const seatGeo = new THREE.BoxGeometry(chairW, 0.08, chairD);
+        const seat = new THREE.Mesh(seatGeo, cushionMat);
+        seat.position.y = legH;
+        seat.castShadow = true;
+        parts.push(seat);
 
-    const positions = [
-      [-l / 2, -h / 4, -w / 2],
-      [l / 2, -h / 4, -w / 2],
-      [-l / 2, -h / 4, w / 2],
-      [l / 2, -h / 4, w / 2],
-    ];
+        // Seat cushion round edges (simulated with slightly smaller rounded box)
+        const seatFrame = new THREE.Mesh(new THREE.BoxGeometry(chairW + 0.02, 0.06, chairD + 0.02), frameMat);
+        seatFrame.position.y = legH - 0.01;
+        seatFrame.castShadow = true;
+        parts.push(seatFrame);
 
-    positions.forEach(pos => {
-      const leg = new THREE.Mesh(legGeo, material);
-      leg.position.set(...pos);
-      scene.add(leg);
-    });
+        // Backrest
+        const backH = H2 * 0.45;
+        const backGeo = new THREE.BoxGeometry(chairW, backH, 0.07);
+        const back = new THREE.Mesh(backGeo, cushionMat);
+        back.position.set(0, legH + 0.08 + backH / 2, -chairD / 2 + 0.04);
+        back.castShadow = true;
+        parts.push(back);
 
-    function animate() {
-      requestAnimationFrame(animate);
-      scene.rotation.y += 0.01;
+        const backFrame = new THREE.Mesh(new THREE.BoxGeometry(chairW + 0.02, backH + 0.03, 0.05), frameMat);
+        backFrame.position.set(0, legH + 0.08 + backH / 2, -chairD / 2 + 0.02);
+        parts.push(backFrame);
+
+        // 4 legs
+        [[chairW/2 - legThick, -chairD/2 + legThick], [-chairW/2 + legThick, -chairD/2 + legThick],
+         [chairW/2 - legThick, chairD/2 - legThick], [-chairW/2 + legThick, chairD/2 - legThick]].forEach(([x, z]) => {
+          const leg = new THREE.Mesh(new THREE.BoxGeometry(legThick, legH, legThick), frameMat);
+          leg.position.set(x, legH / 2, z);
+          leg.castShadow = true;
+          parts.push(leg);
+        });
+
+        // Cross bar front
+        const bar = new THREE.Mesh(new THREE.BoxGeometry(chairW - 0.08, 0.035, 0.035), frameMat);
+        bar.position.set(0, legH * 0.4, chairD / 2 - legThick);
+        parts.push(bar);
+
+      } else if (type === 'accent') {
+        // Bucket-style accent chair
+        const seatGeo = new THREE.CylinderGeometry(chairW * 0.52, chairW * 0.48, 0.1, 16);
+        const seat = new THREE.Mesh(seatGeo, cushionMat);
+        seat.position.y = legH;
+        seat.castShadow = true;
+        parts.push(seat);
+
+        // Rounded back
+        const points = [];
+        for (let i = 0; i <= 10; i++) {
+          const t = i / 10;
+          points.push(new THREE.Vector2(chairW * 0.5 * (1 - t * 0.2), t * H2 * 0.5));
+        }
+        const backShape = new THREE.LatheGeometry(points, 24, Math.PI * 0.6, Math.PI * 1.4);
+        const back = new THREE.Mesh(backShape, cushionMat);
+        back.position.set(0, legH + 0.05, 0);
+        back.castShadow = true;
+        parts.push(back);
+
+        // 4 angled legs
+        [[0.85, 1], [-0.85, 1], [0.85, -1], [-0.85, -1]].forEach(([xs, zs]) => {
+          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.02, legH * 1.1, 8), frameMat);
+          leg.position.set(xs * chairW * 0.38, legH * 0.5, zs * chairW * 0.38);
+          leg.rotation.z = xs > 0 ? -0.15 : 0.15;
+          leg.rotation.x = zs > 0 ? 0.15 : -0.15;
+          leg.castShadow = true;
+          parts.push(leg);
+        });
+
+      } else if (type === 'lounge') {
+        // Wide low lounge chair
+        const sw = chairW * 1.3;
+        const sd = chairD * 1.2;
+        const seatGeo = new THREE.BoxGeometry(sw, 0.12, sd);
+        const seat = new THREE.Mesh(seatGeo, cushionMat);
+        seat.position.y = legH * 0.6;
+        seat.castShadow = true;
+        parts.push(seat);
+
+        // Low back
+        const backH = H2 * 0.28;
+        const backGeo = new THREE.BoxGeometry(sw, backH, 0.1);
+        const back = new THREE.Mesh(backGeo, cushionMat);
+        back.rotation.x = -0.25;
+        back.position.set(0, legH * 0.6 + 0.12 + backH * 0.4, -sd / 2 + 0.05);
+        back.castShadow = true;
+        parts.push(back);
+
+        // Armrests
+        [-1, 1].forEach(side => {
+          const arm = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.07, sd * 0.8), frameMat);
+          arm.position.set(side * sw / 2, legH * 0.6 + 0.12 + 0.035, -sd * 0.1);
+          arm.castShadow = true;
+          parts.push(arm);
+        });
+
+        // Platform base
+        const base = new THREE.Mesh(new THREE.BoxGeometry(sw + 0.08, legH * 0.6, sd + 0.08), frameMat);
+        base.position.y = legH * 0.3;
+        base.castShadow = true;
+        parts.push(base);
+
+      } else if (type === 'barstool') {
+        // Tall bar stool
+        const barLegH = legH * 1.7;
+        const seatGeo = new THREE.CylinderGeometry(chairW * 0.46, chairW * 0.44, 0.08, 16);
+        const seat = new THREE.Mesh(seatGeo, cushionMat);
+        seat.position.y = barLegH;
+        seat.castShadow = true;
+        parts.push(seat);
+
+        // Footrest ring
+        const footRingGeo = new THREE.TorusGeometry(chairW * 0.32, 0.025, 8, 24);
+        const footRing = new THREE.Mesh(footRingGeo, frameMat);
+        footRing.rotation.x = Math.PI / 2;
+        footRing.position.y = barLegH * 0.38;
+        footRing.castShadow = true;
+        parts.push(footRing);
+
+        // 4 legs
+        for (let i = 0; i < 4; i++) {
+          const angle = (i / 4) * Math.PI * 2;
+          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.018, barLegH, 8), frameMat);
+          leg.position.set(Math.cos(angle) * chairW * 0.33, barLegH / 2, Math.sin(angle) * chairW * 0.33);
+          leg.castShadow = true;
+          parts.push(leg);
+        }
+
+        // Backrest simple
+        const backH = H2 * 0.3;
+        const back = new THREE.Mesh(new THREE.CylinderGeometry(chairW * 0.44, chairW * 0.44, 0.06, 16, 1, true, Math.PI * 0.1, Math.PI * 0.8), cushionMat);
+        back.position.set(0, barLegH + 0.08 + backH * 0.3, 0);
+        back.castShadow = true;
+        parts.push(back);
+      }
+
+      return parts;
+    };
+
+    const parts = buildChair(config.type);
+    parts.forEach(p => chairGroup.add(p));
+    scene.add(chairGroup);
+
+    // Center the chair
+    const box = new THREE.Box3().setFromObject(chairGroup);
+    const center = box.getCenter(new THREE.Vector3());
+    chairGroup.position.sub(center);
+    chairGroup.position.y += box.getSize(new THREE.Vector3()).y / 2;
+
+    // Mouse rotation
+    let isDragging = false;
+    let prevX = 0;
+    let rotY = 0;
+    let autoRotate = true;
+
+    const onMouseDown = (e) => { isDragging = true; autoRotate = false; prevX = e.clientX || e.touches?.[0]?.clientX; };
+    const onMouseMove = (e) => {
+      if (!isDragging) return;
+      const x = e.clientX || e.touches?.[0]?.clientX;
+      rotY += (x - prevX) * 0.01;
+      prevX = x;
+    };
+    const onMouseUp = () => { isDragging = false; };
+
+    renderer.domElement.addEventListener('mousedown', onMouseDown);
+    renderer.domElement.addEventListener('touchstart', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchmove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('touchend', onMouseUp);
+
+    let animId;
+    const animate = () => {
+      animId = requestAnimationFrame(animate);
+      if (autoRotate) rotY += 0.005;
+      chairGroup.rotation.y = rotY;
       renderer.render(scene, camera);
-    }
-
+    };
     animate();
-  }, [length, width, height, color]);
+
+    sceneRef.current = { animId, renderer, scene };
+    return () => {
+      cancelAnimationFrame(animId);
+      renderer.dispose();
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('touchmove', onMouseMove);
+      window.removeEventListener('touchend', onMouseUp);
+    };
+  }, [config]);
 
   return (
-  <div
-    ref={mountRef}
-    style={{
-      width: "100%",
-      height: "320px",
-      borderRadius: "12px",
-      overflow: "hidden",
-      background: "#f5f2ec"
-    }}
-  />
-);
+    <div ref={mountRef} style={{ width: '100%', height: '460px', borderRadius: 16, overflow: 'hidden', cursor: 'grab' }} />
+  );
 }
 
+// ── CHAIR CONFIGURATOR ───────────────────────────────────────────────────────
+const CHAIR_TYPES = [
+  { id: 'dining', label: 'Dining Chair', icon: '🪑', desc: 'Classic 4-leg dining' },
+  { id: 'accent', label: 'Accent Chair', icon: '🛋️', desc: 'Rounded barrel style' },
+  { id: 'lounge', label: 'Lounge Chair', icon: '🛏️', desc: 'Low wide lounge' },
+  { id: 'barstool', label: 'Bar Stool', icon: '🍸', desc: 'Tall counter stool' },
+];
+
+const COLOR_OPTS = [
+  { name: 'Matte Black', hex: '#1a1a1a' },
+  { name: 'Glossy White', hex: '#f0f0f0' },
+  { name: 'Gun Metal', hex: '#4a4e6a' },
+  { name: 'Chrome Silver', hex: '#b8c0cc' },
+  { name: 'Rose Gold', hex: '#c87b6e' },
+  { name: 'Navy Blue', hex: '#1e3a5f' },
+  { name: 'Oak Wood', hex: '#c47a35' },
+  { name: 'Walnut', hex: '#6b3a2a' },
+  { name: 'Sage Green', hex: '#7a9e7e' },
+];
+
+const CUSHION_COLORS = [
+  { name: 'Linen', hex: '#c8b89a' },
+  { name: 'Charcoal', hex: '#4a4a4a' },
+  { name: 'Cream', hex: '#f0ead8' },
+  { name: 'Terracotta', hex: '#c4603a' },
+  { name: 'Forest', hex: '#3d6b4f' },
+  { name: 'Slate Blue', hex: '#5a6e8a' },
+];
+
+const MATERIALS = ['Steel', 'Aluminum', 'Stainless Steel'];
+const FINISHES = ['Matte', 'Satin', 'Glossy'];
+
+function ChairConfigurator() {
+  const [config, setConfig] = useState({
+    type: 'dining',
+    length: 48,
+    width: 48,
+    height: 90,
+    legHeight: 45,
+    material: 'Steel',
+    color: 'Matte Black',
+    cushionColor: '#c8b89a',
+    finish: 'Matte',
+    armrests: false,
+    cushion: true,
+  });
+
+  const set = (k, v) => setConfig(c => ({ ...c, [k]: v }));
+
+  const calcPrice = () => {
+    const base = { dining: 4200, accent: 6500, lounge: 8900, barstool: 5100 };
+    const matMul = { Steel: 1, Aluminum: 1.4, 'Stainless Steel': 1.9 };
+    const finMul = { Matte: 1, Satin: 1.12, Glossy: 1.25 };
+    let p = base[config.type] || 4200;
+    p *= matMul[config.material] || 1;
+    p *= finMul[config.finish] || 1;
+    if (config.armrests) p += 800;
+    if (config.cushion) p += 600;
+    return Math.round(p);
+  };
+
+  return (
+    <div className="configurator-wrap animate-fadeIn">
+      {/* Header */}
+      <div className="configurator-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🪑</div>
+          <div>
+            <div style={{ color: '#fff', fontWeight: 800, fontSize: 17 }}>3D Chair Configurator</div>
+            <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: 12 }}>Drag to rotate · Real-time preview</div>
+          </div>
+        </div>
+        <div style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '8px 16px', color: '#fff', fontSize: 13, fontWeight: 700 }}>
+          ₹{calcPrice().toLocaleString('en-IN')}
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="configurator-body">
+        {/* 3D Viewer */}
+        <div className="viewer-panel">
+          {/* Chair type pills across top */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {CHAIR_TYPES.map(ct => (
+              <button key={ct.id}
+                onClick={() => set('type', ct.id)}
+                style={{
+                  padding: '6px 14px', borderRadius: 20, border: '1.5px solid',
+                  borderColor: config.type === ct.id ? 'var(--reseda)' : 'var(--border2)',
+                  background: config.type === ct.id ? 'rgba(132,140,103,0.15)' : 'rgba(255,255,255,0.8)',
+                  color: config.type === ct.id ? 'var(--ebony)' : 'var(--text3)',
+                  fontSize: 12, fontWeight: config.type === ct.id ? 700 : 500,
+                  cursor: 'pointer', transition: 'all 0.2s',
+                  display: 'flex', alignItems: 'center', gap: 5,
+                }}
+              >
+                <span>{ct.icon}</span> {ct.label}
+              </button>
+            ))}
+          </div>
+
+          <Chair3DViewer config={config} />
+
+          {/* Dimension display overlay */}
+          <div style={{
+            position: 'absolute', top: 72, right: 16,
+            background: 'rgba(245,242,236,0.92)', backdropFilter: 'blur(8px)',
+            borderRadius: 12, padding: '10px 14px', border: '1px solid var(--border2)',
+            fontSize: 11, color: 'var(--text2)', lineHeight: 1.8,
+          }}>
+            <div style={{ fontWeight: 700, fontSize: 10, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>Dimensions</div>
+            <div>W: <strong style={{ color: 'var(--ebony)' }}>{config.width} cm</strong></div>
+            <div>D: <strong style={{ color: 'var(--ebony)' }}>{config.length} cm</strong></div>
+            <div>H: <strong style={{ color: 'var(--ebony)' }}>{config.height} cm</strong></div>
+          </div>
+
+          <div className="viewer-controls">
+            <span>🖱️ Drag to rotate</span>
+            <span style={{ color: 'var(--border2)' }}>|</span>
+            <span>Auto-rotates when idle</span>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="controls-panel">
+
+          {/* Chair Types grid */}
+          <div className="config-section-title">🪑 Chair Style</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 4 }}>
+            {CHAIR_TYPES.map(ct => (
+              <div key={ct.id} className={`chair-type-card ${config.type === ct.id ? 'active' : ''}`} onClick={() => set('type', ct.id)}>
+                <div className="chair-type-thumb">{ct.icon}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>{ct.label}</div>
+                <div style={{ fontSize: 10, color: 'var(--text3)' }}>{ct.desc}</div>
+                {config.type === ct.id && <span style={{ fontSize: 10 }} className="badge badge-purple">Selected</span>}
+              </div>
+            ))}
+          </div>
+
+          <div className="section-divider" />
+
+          {/* Frame Color */}
+          <div className="config-section-title">🎨 Frame Color</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 6 }}>
+            {COLOR_OPTS.map(c => (
+              <div key={c.name} style={{ textAlign: 'center' }}>
+                <div
+                  onClick={() => set('color', c.name)}
+                  style={{
+                    width: 30, height: 30, borderRadius: '50%', cursor: 'pointer',
+                    background: c.hex, border: config.color === c.name ? '3px solid var(--reseda)' : '2px solid var(--border)',
+                    boxShadow: config.color === c.name ? '0 0 0 2px var(--glow)' : '0 1px 4px rgba(0,0,0,0.1)',
+                    transform: config.color === c.name ? 'scale(1.2)' : 'scale(1)',
+                    transition: 'all 0.2s',
+                  }}
+                />
+                <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 4, width: 36, lineHeight: 1.1 }}>{c.name}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="section-divider" />
+
+          {/* Cushion Color */}
+          <div className="config-section-title">🪑 Cushion / Upholstery</div>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 6 }}>
+            {CUSHION_COLORS.map(c => (
+              <div key={c.name} style={{ textAlign: 'center' }}>
+                <div
+                  onClick={() => set('cushionColor', c.hex)}
+                  style={{
+                    width: 28, height: 28, borderRadius: 8, cursor: 'pointer',
+                    background: c.hex, border: config.cushionColor === c.hex ? '2.5px solid var(--reseda)' : '1.5px solid var(--border)',
+                    transform: config.cushionColor === c.hex ? 'scale(1.2)' : 'scale(1)',
+                    transition: 'all 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                  }}
+                />
+                <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 4, width: 36, lineHeight: 1.1 }}>{c.name}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="section-divider" />
+
+          {/* Material */}
+          <div className="config-section-title">⚗️ Frame Material</div>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
+            {MATERIALS.map(m => (
+              <button key={m} className={`material-btn ${config.material === m ? 'active' : ''}`} onClick={() => set('material', m)} style={{ flex: 1 }}>
+                {m}
+              </button>
+            ))}
+          </div>
+
+          <div className="section-divider" />
+
+          {/* Finish */}
+          <div className="config-section-title">✨ Surface Finish</div>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
+            {FINISHES.map(f => (
+              <button key={f} className={`finish-chip ${config.finish === f ? 'active' : ''}`} onClick={() => set('finish', f)}>
+                {f}
+              </button>
+            ))}
+          </div>
+
+          <div className="section-divider" />
+
+          {/* Dimensions */}
+          <div className="config-section-title">📐 Dimensions (cm)</div>
+          {[
+            { key: 'width', label: 'Width', min: 35, max: 80 },
+            { key: 'length', label: 'Depth', min: 35, max: 75 },
+            { key: 'height', label: 'Total Height', min: 60, max: 130 },
+            { key: 'legHeight', label: 'Seat Height', min: 28, max: 80 },
+          ].map(({ key, label, min, max }) => (
+            <div key={key} className="dim-slider-row">
+              <label>{label} <span>{config[key]} cm</span></label>
+              <input type="range" min={min} max={max} value={config[key]}
+                onChange={e => set(key, +e.target.value)} />
+            </div>
+          ))}
+
+          <div className="section-divider" />
+
+          {/* Add-ons */}
+          <div className="config-section-title">⚙️ Add-ons</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 8 }}>
+            {[
+              { key: 'armrests', label: 'Armrests', cost: '+₹800', icon: '💪' },
+              { key: 'cushion', label: 'Seat Cushion', cost: '+₹600', icon: '🪶' },
+            ].map(({ key, label, cost, icon }) => (
+              <div key={key}
+                className={`toggle-wrap ${config[key] ? 'on' : ''}`}
+                style={{ padding: '10px 14px' }}
+                onClick={() => set(key, !config[key])}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontSize: 16 }}>{icon}</span>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>{label}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text3)' }}>{cost}</div>
+                  </div>
+                </div>
+                <div className={`toggle ${config[key] ? 'on' : ''}`} />
+              </div>
+            ))}
+          </div>
+
+          {/* Price Tag */}
+          <div className="price-tag">
+            <div>
+              <div style={{ fontSize: 11, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>Estimated Price</div>
+              <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>{config.material} · {config.finish} · {CHAIR_TYPES.find(t => t.id === config.type)?.label}</div>
+            </div>
+            <div>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 26, fontWeight: 800, color: 'var(--ebony)' }}>
+                ₹{calcPrice().toLocaleString('en-IN')}
+              </div>
+            </div>
+          </div>
+
+          <button className="btn-primary" style={{ width: '100%', marginTop: 14, justifyContent: 'center' }}>
+            Add to Quote →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── CONSTANTS ────────────────────────────────────────────────────────────────
 const CATEGORIES = [
   { id: 'table', name: 'Coffee Table', icon: '🪑', desc: 'Side & center tables', color: '#7c5cfc' },
   { id: 'chair', name: 'Chair', icon: '🪑', desc: 'Accent & dining chairs', color: '#5b8af7' },
@@ -680,15 +867,15 @@ const CATEGORIES = [
 ];
 
 const SUBTYPES = {
-  table: ['Modern', 'Minimal', 'Industrial', 'Premium', 'Rustic'],
-  chair: ['Dining', 'Accent', 'Office', 'Bar Stool', 'Lounge'],
-  sofa: ['2-Seater', '3-Seater', 'L-Shape', 'Loveseat', 'Sectional'],
-  bed: ['Single', 'Double', 'Queen', 'King', 'Bunk Bed'],
-  default: ['Modern', 'Minimal', 'Industrial', 'Premium', 'Classic'],
+  table: ['Modern','Minimal','Industrial','Premium','Rustic'],
+  chair: ['Dining','Accent','Office','Bar Stool','Lounge'],
+  sofa: ['2-Seater','3-Seater','L-Shape','Loveseat','Sectional'],
+  bed: ['Single','Double','Queen','King','Bunk Bed'],
+  default: ['Modern','Minimal','Industrial','Premium','Classic'],
 };
 
-const MATERIALS = ['Steel', 'Aluminum', 'Stainless Steel'];
-const COLORS = [
+const MATERIALS2 = ['Steel','Aluminum','Stainless Steel'];
+const COLORS2 = [
   { name: 'Matte Black', hex: '#1a1a1a' },
   { name: 'Glossy White', hex: '#f5f5f5' },
   { name: 'Wooden Finish', hex: '#a0672a' },
@@ -696,162 +883,103 @@ const COLORS = [
   { name: 'Rose Gold', hex: '#b87066' },
   { name: 'Chrome Silver', hex: '#c0c0c0' },
 ];
-const THEMES = ['Modern', 'Minimal', 'Industrial', 'Premium'];
+const THEMES = ['Modern','Minimal','Industrial','Premium'];
 const FEATURES = [
   { id: 'storage', label: 'Built-in Storage', icon: '📦', cost: '+ ₹1,200' },
   { id: 'drawers', label: 'Drawers', icon: '🗄️', cost: '+ ₹800' },
   { id: 'adjustableHeight', label: 'Adjustable Height', icon: '↕️', cost: '+ ₹600' },
 ];
 
-// Mock AI designs
 const MOCK_DESIGNS = {
   table: [
-    { id: 1, name: 'Apex Industrial', style: 'Industrial', description: 'Raw steel hairpin legs with a reclaimed solid top. Bold, utilitarian, statement piece for lofts.', rating: 4.8, complexity: 'Medium', accent: '#7c5cfc' },
-    { id: 2, name: 'Lumina Minimal', style: 'Minimal', description: 'Ultra-thin steel profile, brushed finish. Less is brilliantly more — perfection in restraint.', rating: 4.9, complexity: 'Low', accent: '#38d9a9' },
-    { id: 3, name: 'Forma Premium', style: 'Premium', description: 'Geometric welded frame, mirror-polished stainless. Designed for boardrooms and luxury homes.', rating: 4.7, complexity: 'High', accent: '#f5c842' },
-    { id: 4, name: 'Urban Modern', style: 'Modern', description: 'Angular powder-coated steel, clean rectangular silhouette. The contemporary home staple.', rating: 4.6, complexity: 'Medium', accent: '#5b8af7' },
+    { id:1, name:'Apex Industrial', style:'Industrial', description:'Raw steel hairpin legs with a reclaimed solid top.', rating:4.8, complexity:'Medium', accent:'#7c5cfc' },
+    { id:2, name:'Lumina Minimal', style:'Minimal', description:'Ultra-thin steel profile, brushed finish.', rating:4.9, complexity:'Low', accent:'#38d9a9' },
+    { id:3, name:'Forma Premium', style:'Premium', description:'Geometric welded frame, mirror-polished stainless.', rating:4.7, complexity:'High', accent:'#f5c842' },
+    { id:4, name:'Urban Modern', style:'Modern', description:'Angular powder-coated steel, clean rectangular silhouette.', rating:4.6, complexity:'Medium', accent:'#5b8af7' },
   ],
 };
-
 const getDesigns = (category) => {
-  const key = category?.toLowerCase().replace(/\s/g, '');
-  return (MOCK_DESIGNS[key] || MOCK_DESIGNS.table).map(d => ({
-    ...d,
-    accent: d.accent,
-  }));
+  const key = category?.toLowerCase().replace(/\s/g,'');
+  return (MOCK_DESIGNS[key] || MOCK_DESIGNS.table).map(d => ({ ...d }));
 };
 
-// ─── TOAST ──────────────────────────────────────────────────────────────────
-function Toast({ message, type = 'success', onClose }) {
-  useEffect(() => {
-    const t = setTimeout(onClose, 3000);
-    return () => clearTimeout(t);
-  }, []);
-
-  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+// ── TOAST ────────────────────────────────────────────────────────────────────
+function Toast({ message, type='success', onClose }) {
+  useEffect(() => { const t = setTimeout(onClose, 3000); return () => clearTimeout(t); }, []);
+  const icons = { success:'✅', error:'❌', info:'ℹ️' };
   return (
     <div className={`toast ${type}`}>
-      <span style={{ fontSize: 20 }}>{icons[type]}</span>
-      <span style={{ color: 'var(--text)', fontSize: 15, fontWeight: 500 }}>{message}</span>
+      <span style={{ fontSize:20 }}>{icons[type]}</span>
+      <span style={{ color:'var(--text)', fontSize:15, fontWeight:500 }}>{message}</span>
     </div>
   );
 }
 
-// ─── NAVBAR ──────────────────────────────────────────────────────────────────
 function Navbar({ step, onReset }) {
   return (
     <nav className="navbar">
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }} onClick={onReset} className="btn-ghost" role="button">
-          <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, #7c5cfc, #5b8af7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>⚙</div>
-          <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.02em' }}>KarigarX <span className="gradient-text">AI</span></span>
+      <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:12 }} onClick={onReset} className="btn-ghost" role="button">
+          <div style={{ width:32, height:32, borderRadius:8, background:'linear-gradient(135deg,#7c5cfc,#5b8af7)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16 }}>⚙</div>
+          <span style={{ fontWeight:700, fontSize:18, letterSpacing:'-0.02em' }}>KarigarX <span className="gradient-text">AI</span></span>
         </div>
-
-        <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {['Explore', 'Customize', 'Estimate', 'Optimize'].map((s, i) => (
-            <span key={s} style={{
-              padding: '6px 14px',
-              borderRadius: 8,
-              fontSize: 13,
-              fontWeight: 500,
-              color: step > i ? 'var(--accent)' : 'var(--text3)',
-              background: step > i ? 'rgba(124,92,252,0.1)' : 'transparent',
-            }}>{s}</span>
-          ))}
-        </div>
-
-        <button className="btn-secondary" style={{ padding: '8px 18px', fontSize: 13 }} onClick={onReset}>
-          🔄 New Design
-        </button>
+        <button className="btn-secondary" style={{ padding:'8px 18px', fontSize:13 }} onClick={onReset}>🔄 New Design</button>
       </div>
     </nav>
   );
 }
 
-// ─── STEP PROGRESS ────────────────────────────────────────────────────────────
 function StepProgress({ current, total }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px 0' }}>
-      {Array.from({ length: total }, (_, i) => (
-        <div key={i} className={`step-dot ${i < current ? 'done' : i === current ? 'active' : ''}`} />
+    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, padding:'12px 0' }}>
+      {Array.from({ length:total }, (_,i) => (
+        <div key={i} className={`step-dot ${i<current?'done':i===current?'active':''}`} />
       ))}
     </div>
   );
 }
 
-// ─── SECTION HEADER ──────────────────────────────────────────────────────────
 function SectionHeader({ tag, title, sub }) {
   return (
-    <div style={{ textAlign: 'center', marginBottom: 48 }}>
-      {tag && <span className="badge badge-purple" style={{ marginBottom: 16 }}>{tag}</span>}
-      <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.15, marginBottom: 14 }}>{title}</h2>
-      {sub && <p style={{ color: 'var(--text2)', fontSize: 17, maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>{sub}</p>}
+    <div style={{ textAlign:'center', marginBottom:48 }}>
+      {tag && <span className="badge badge-purple" style={{ marginBottom:16 }}>{tag}</span>}
+      <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(28px,4vw,44px)', fontWeight:800, lineHeight:1.15, marginBottom:14 }}>{title}</h2>
+      {sub && <p style={{ color:'var(--text2)', fontSize:17, maxWidth:520, margin:'0 auto', lineHeight:1.7 }}>{sub}</p>}
     </div>
   );
 }
 
-// ─── LANDING PAGE ────────────────────────────────────────────────────────────
+// ── LANDING ─────────────────────────────────────────────────────────────────
 function Landing({ onStart }) {
   const [hoveredCat, setHoveredCat] = useState(null);
-
   return (
     <div>
-      {/* Hero */}
-      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', paddingTop: 100, paddingBottom: 80 }}>
+      <section style={{ minHeight:'100vh', display:'flex', alignItems:'center', position:'relative', paddingTop:100, paddingBottom:80 }}>
         <div className="hero-bg">
-          <div className="hero-blob animate-float" style={{ width: 600, height: 600, background: '#7c5cfc', top: '-100px', left: '-100px' }} />
-          <div className="hero-blob animate-float" style={{ width: 400, height: 400, background: '#5b8af7', bottom: '-50px', right: '100px', animationDelay: '1s' }} />
-          <div className="hero-blob animate-float" style={{ width: 300, height: 300, background: '#38d9a9', top: '50%', left: '60%', animationDelay: '2s' }} />
-          {/* Grid pattern */}
-          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.03 }}>
-            <defs>
-              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"/>
-              </pattern>
-            </defs>
+          <div className="hero-blob animate-float" style={{ width:600, height:600, background:'#7c5cfc', top:'-100px', left:'-100px' }} />
+          <div className="hero-blob animate-float" style={{ width:400, height:400, background:'#5b8af7', bottom:'-50px', right:'100px', animationDelay:'1s' }} />
+          <div className="hero-blob animate-float" style={{ width:300, height:300, background:'#38d9a9', top:'50%', left:'60%', animationDelay:'2s' }} />
+          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:0.03 }}>
+            <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"/></pattern></defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
           </svg>
         </div>
-
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
-            <div className="animate-fadeUp stagger-1" style={{ marginBottom: 20 }}>
-              <span className="badge badge-green">✦ AI-Powered Design Platform</span>
-            </div>
-
-            <h1 className="animate-fadeUp stagger-2" style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(44px, 7vw, 84px)',
-              fontWeight: 800,
-              lineHeight: 1.05,
-              marginBottom: 24,
-              letterSpacing: '-0.02em',
-            }}>
+        <div className="container" style={{ position:'relative', zIndex:1 }}>
+          <div style={{ maxWidth:720, margin:'0 auto', textAlign:'center' }}>
+            <div className="animate-fadeUp stagger-1" style={{ marginBottom:20 }}><span className="badge badge-green">✦ AI-Powered Design Platform</span></div>
+            <h1 className="animate-fadeUp stagger-2" style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(44px,7vw,84px)', fontWeight:800, lineHeight:1.05, marginBottom:24, letterSpacing:'-0.02em' }}>
               Design Your<br /><span className="gradient-text">Dream Furniture</span>
             </h1>
-
-            <p className="animate-fadeUp stagger-3" style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'var(--text2)', marginBottom: 40, lineHeight: 1.7, maxWidth: 540, margin: '0 auto 40px' }}>
-              Precision-crafted custom metal furniture, designed by you — powered by AI.
-              From concept to manufacturing blueprint in minutes.
+            <p className="animate-fadeUp stagger-3" style={{ fontSize:'clamp(16px,2vw,20px)', color:'var(--text2)', marginBottom:40, lineHeight:1.7, maxWidth:540, margin:'0 auto 40px' }}>
+              Precision-crafted custom metal furniture, designed by you — powered by AI. From concept to manufacturing blueprint in minutes.
             </p>
-
-            <div className="animate-fadeUp stagger-4" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="btn-primary animate-glow" onClick={onStart} style={{ fontSize: 17, padding: '18px 40px' }}>
-                ✦ Start Designing
-              </button>
-              <button className="btn-secondary" onClick={() => document.getElementById('categories').scrollIntoView({ behavior: 'smooth' })}>
-                Browse Categories ↓
-              </button>
+            <div className="animate-fadeUp stagger-4" style={{ display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
+              <button className="btn-primary animate-glow" onClick={onStart} style={{ fontSize:17, padding:'18px 40px' }}>✦ Start Designing</button>
+              <button className="btn-secondary" onClick={() => document.getElementById('categories')?.scrollIntoView({ behavior:'smooth' })}>Browse Categories ↓</button>
             </div>
-
-            {/* Stats */}
-            <div className="animate-fadeUp stagger-5" style={{ display: 'flex', gap: 0, justifyContent: 'center', marginTop: 64 }}>
-              {[
-                { num: '2,400+', label: 'Designs Created' },
-                { num: '98%', label: 'Client Satisfaction' },
-                { num: '35%', label: 'Material Saved' },
-              ].map((s, i) => (
-                <div key={i} className="stat-item" style={{ flex: 1, borderRight: i < 2 ? '1px solid var(--border)' : 'none' }}>
+            <div className="animate-fadeUp stagger-5" style={{ display:'flex', gap:0, justifyContent:'center', marginTop:64 }}>
+              {[{ num:'2,400+', label:'Designs Created' }, { num:'98%', label:'Client Satisfaction' }, { num:'35%', label:'Material Saved' }].map((s,i) => (
+                <div key={i} className="stat-item" style={{ flex:1, borderRight: i<2 ? '1px solid var(--border)' : 'none' }}>
                   <div className="stat-num gradient-text">{s.num}</div>
                   <div className="stat-label">{s.label}</div>
                 </div>
@@ -861,62 +989,44 @@ function Landing({ onStart }) {
         </div>
       </section>
 
-      {/* Categories */}
-      <section id="categories" className="section">
+      {/* Chair Configurator Preview on Landing */}
+      <section className="section" style={{ borderTop:'1px solid var(--border)' }}>
         <div className="container">
-          <SectionHeader
-            tag="✦ 12 Categories"
-            title="What Would You Like to Create?"
-            sub="From statement tables to full bedroom suites — choose your canvas and let's build something extraordinary."
-          />
+          <SectionHeader tag="✦ Try It Now" title="Live 3D Chair Configurator" sub="Customize your chair in real-time — drag to rotate, change colors, materials and dimensions instantly." />
+          <ChairConfigurator />
+        </div>
+      </section>
 
+      <section id="categories" className="section" style={{ borderTop:'1px solid var(--border)' }}>
+        <div className="container">
+          <SectionHeader tag="✦ 12 Categories" title="What Would You Like to Create?" sub="From statement tables to full bedroom suites — choose your canvas." />
           <div className="grid-auto">
-            {CATEGORIES.map((cat, i) => (
-              <div
-                key={cat.id}
-                className={`card animate-fadeUp stagger-${(i % 6) + 1}`}
-                style={{ textAlign: 'center', padding: '28px 20px' }}
-                onMouseEnter={() => setHoveredCat(cat.id)}
-                onMouseLeave={() => setHoveredCat(null)}
-                onClick={onStart}
-              >
-                <div style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: 18,
-                  background: `linear-gradient(135deg, ${cat.color}22, ${cat.color}44)`,
-                  border: `1px solid ${cat.color}44`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 28,
-                  margin: '0 auto 16px',
-                  transition: 'transform 0.3s',
-                  transform: hoveredCat === cat.id ? 'scale(1.1) rotate(-5deg)' : 'scale(1)',
-                }}>
+            {CATEGORIES.map((cat,i) => (
+              <div key={cat.id} className={`card animate-fadeUp stagger-${(i%6)+1}`} style={{ textAlign:'center', padding:'28px 20px' }}
+                onMouseEnter={() => setHoveredCat(cat.id)} onMouseLeave={() => setHoveredCat(null)} onClick={onStart}>
+                <div style={{ width:64, height:64, borderRadius:18, background:`linear-gradient(135deg,${cat.color}22,${cat.color}44)`, border:`1px solid ${cat.color}44`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:28, margin:'0 auto 16px', transition:'transform 0.3s', transform: hoveredCat===cat.id ? 'scale(1.1) rotate(-5deg)':'scale(1)' }}>
                   {cat.icon}
                 </div>
-                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{cat.name}</div>
-                <div style={{ fontSize: 12, color: 'var(--text3)' }}>{cat.desc}</div>
+                <div style={{ fontWeight:700, fontSize:15, marginBottom:4 }}>{cat.name}</div>
+                <div style={{ fontSize:12, color:'var(--text3)' }}>{cat.desc}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
+      <section className="section" style={{ borderTop:'1px solid var(--border)' }}>
         <div className="container">
-          <div className="grid-3" style={{ gap: 30 }}>
+          <div className="grid-3" style={{ gap:30 }}>
             {[
-              { icon: '🤖', title: 'AI Design Generation', desc: 'Get 3-4 AI-curated designs based on your exact preferences, style, and space.' },
-              { icon: '📐', title: 'Precision Customization', desc: 'Adjust every dimension, material, and finish with real-time visual feedback.' },
-              { icon: '⚙️', title: 'Material Optimization', desc: 'Smart sheet-nesting reduces waste by up to 35%, saving you real money.' },
-            ].map((f, i) => (
-              <div key={i} className="glass" style={{ padding: 32, borderRadius: 24 }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>{f.icon}</div>
-                <h3 style={{ fontWeight: 700, fontSize: 18, marginBottom: 10 }}>{f.title}</h3>
-                <p style={{ color: 'var(--text2)', fontSize: 15, lineHeight: 1.7 }}>{f.desc}</p>
+              { icon:'🤖', title:'AI Design Generation', desc:'Get 3–4 AI-curated designs based on your exact preferences, style, and space.' },
+              { icon:'📐', title:'Precision Customization', desc:'Adjust every dimension, material, and finish with real-time visual feedback.' },
+              { icon:'⚙️', title:'Material Optimization', desc:'Smart sheet-nesting reduces waste by up to 35%, saving you real money.' },
+            ].map((f,i) => (
+              <div key={i} className="glass" style={{ padding:32, borderRadius:24 }}>
+                <div style={{ fontSize:40, marginBottom:16 }}>{f.icon}</div>
+                <h3 style={{ fontWeight:700, fontSize:18, marginBottom:10 }}>{f.title}</h3>
+                <p style={{ color:'var(--text2)', fontSize:15, lineHeight:1.7 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -926,77 +1036,52 @@ function Landing({ onStart }) {
   );
 }
 
-// ─── STEP 1: CATEGORY SELECTION ──────────────────────────────────────────────
+// ── STEP 1: CATEGORY ─────────────────────────────────────────────────────────
 function CategoryStep({ onNext, data }) {
   const [selected, setSelected] = useState(data.category || null);
   const [subtype, setSubtype] = useState(data.subtype || null);
-
   const subtypes = selected ? (SUBTYPES[selected] || SUBTYPES.default) : [];
-
-  const handleNext = () => {
-    if (!selected || !subtype) return;
-    onNext({ category: selected, subtype });
-  };
-
   const selCat = CATEGORIES.find(c => c.id === selected);
 
   return (
-    <div className="container" style={{ paddingTop: 120, paddingBottom: 80 }}>
+    <div className="container" style={{ paddingTop:120, paddingBottom:80 }}>
       <StepProgress current={0} total={7} />
-      <div style={{ marginTop: 32 }}>
-        <SectionHeader tag="Step 1 of 7" title="Choose Your Furniture" sub="Select the type of furniture you want to design. We'll guide you through every step." />
+      <div style={{ marginTop:32 }}>
+        <SectionHeader tag="Step 1 of 7" title="Choose Your Furniture" sub="Select the type of furniture you want to design." />
 
-        <div className="grid-auto" style={{ marginBottom: 40 }}>
-          {CATEGORIES.map((cat) => (
-            <div
-              key={cat.id}
-              className={`card ${selected === cat.id ? 'selected' : ''}`}
-              style={{ textAlign: 'center', padding: '24px 16px' }}
-              onClick={() => { setSelected(cat.id); setSubtype(null); }}
-            >
-              <div style={{
-                width: 56,
-                height: 56,
-                borderRadius: 14,
-                background: `linear-gradient(135deg, ${cat.color}22, ${cat.color}44)`,
-                border: `1px solid ${cat.color}44`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 24,
-                margin: '0 auto 12px',
-              }}>
-                {cat.icon}
-              </div>
-              <div style={{ fontWeight: 600, fontSize: 14 }}>{cat.name}</div>
-              {selected === cat.id && <div style={{ marginTop: 8 }}><span className="badge badge-purple">✓ Selected</span></div>}
+        {/* If chair is selected, show 3D configurator inline */}
+        {selected === 'chair' && (
+          <div style={{ marginBottom: 40 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:16 }}>
+              <span className="badge badge-blue">🪑 Interactive Preview</span>
+              <span style={{ fontSize:13, color:'var(--text3)' }}>Configure your chair in 3D before proceeding</span>
+            </div>
+            <ChairConfigurator />
+          </div>
+        )}
+
+        <div className="grid-auto" style={{ marginBottom:40 }}>
+          {CATEGORIES.map(cat => (
+            <div key={cat.id} className={`card ${selected===cat.id?'selected':''}`} style={{ textAlign:'center', padding:'24px 16px' }} onClick={() => { setSelected(cat.id); setSubtype(null); }}>
+              <div style={{ width:56, height:56, borderRadius:14, background:`linear-gradient(135deg,${cat.color}22,${cat.color}44)`, border:`1px solid ${cat.color}44`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:24, margin:'0 auto 12px' }}>{cat.icon}</div>
+              <div style={{ fontWeight:600, fontSize:14 }}>{cat.name}</div>
+              {selected===cat.id && <div style={{ marginTop:8 }}><span className="badge badge-purple">✓ Selected</span></div>}
             </div>
           ))}
         </div>
 
         {selected && (
-          <div className="animate-fadeIn" style={{ background: 'var(--surface)', border: '1px solid var(--border2)', borderRadius: 24, padding: 32, marginBottom: 40 }}>
-            <h3 style={{ fontWeight: 700, fontSize: 18, marginBottom: 6 }}>
-              {selCat?.icon} {selCat?.name} — Choose Style
-            </h3>
-            <p style={{ color: 'var(--text2)', fontSize: 14, marginBottom: 24 }}>Pick the style that matches your vision</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-              {subtypes.map(s => (
-                <button key={s} className={`chip ${subtype === s ? 'active' : ''}`} onClick={() => setSubtype(s)}>
-                  {s}
-                </button>
-              ))}
+          <div className="animate-fadeIn" style={{ background:'var(--surface)', border:'1px solid var(--border2)', borderRadius:24, padding:32, marginBottom:40 }}>
+            <h3 style={{ fontWeight:700, fontSize:18, marginBottom:6 }}>{selCat?.icon} {selCat?.name} — Choose Style</h3>
+            <p style={{ color:'var(--text2)', fontSize:14, marginBottom:24 }}>Pick the style that matches your vision</p>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:12 }}>
+              {subtypes.map(s => <button key={s} className={`chip ${subtype===s?'active':''}`} onClick={() => setSubtype(s)}>{s}</button>)}
             </div>
           </div>
         )}
 
-        <div style={{ textAlign: 'center' }}>
-          <button
-            className="btn-primary"
-            onClick={handleNext}
-            disabled={!selected || !subtype}
-            style={{ opacity: (!selected || !subtype) ? 0.4 : 1, cursor: (!selected || !subtype) ? 'not-allowed' : 'pointer' }}
-          >
+        <div style={{ textAlign:'center' }}>
+          <button className="btn-primary" onClick={() => onNext({ category:selected, subtype })} disabled={!selected||!subtype} style={{ opacity:(!selected||!subtype)?0.4:1, cursor:(!selected||!subtype)?'not-allowed':'pointer' }}>
             Continue to Customization →
           </button>
         </div>
@@ -1005,7 +1090,7 @@ function CategoryStep({ onNext, data }) {
   );
 }
 
-// ─── STEP 2: CUSTOMIZATION FORM ──────────────────────────────────────────────
+// ── STEP 2: CUSTOMIZATION ────────────────────────────────────────────────────
 function CustomizationStep({ onNext, onBack, data }) {
   const [form, setForm] = useState({
     length: data.dimensions?.length || 120,
@@ -1016,164 +1101,92 @@ function CustomizationStep({ onNext, onBack, data }) {
     theme: data.theme || 'Modern',
     features: data.features || {},
   });
+  const set = (key, val) => setForm(f => ({ ...f, [key]:val }));
+  const toggleFeature = (id) => set('features', { ...form.features, [id]:!form.features[id] });
 
-  const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
-  const toggleFeature = (id) => set('features', { ...form.features, [id]: !form.features[id] });
-
-  const handleNext = () => {
-    onNext({
-      dimensions: { length: +form.length, width: +form.width, height: +form.height },
-      material: form.material,
-      color: form.color,
-      theme: form.theme,
-      features: form.features,
-    });
-  };
+  const isChair = data.category === 'chair';
 
   return (
-    <div className="container" style={{ paddingTop: 120, paddingBottom: 80 }}>
+    <div className="container" style={{ paddingTop:120, paddingBottom:80 }}>
       <StepProgress current={1} total={7} />
-      <div style={{ marginTop: 32, maxWidth: 800, margin: '32px auto 0' }}>
-        <SectionHeader tag="Step 2 of 7" title="Customize Your Design" sub="Define the exact dimensions, material, and finish for your piece." />
+      <div style={{ marginTop:32, maxWidth:900, margin:'32px auto 0' }}>
+        <SectionHeader tag="Step 2 of 7" title="Customize Your Design" sub="Define dimensions, material, and finish." />
+
+        {/* 3D Chair configurator for chair category */}
+        {isChair && (
+          <div style={{ marginBottom: 40 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:16 }}>
+              <span className="badge badge-green">🎯 Real-time 3D Preview</span>
+              <span style={{ fontSize:13, color:'var(--text3)' }}>Your chair updates as you configure</span>
+            </div>
+            <ChairConfigurator />
+          </div>
+        )}
 
         {/* Dimensions */}
-        <div className="glass" style={{ padding: 32, marginBottom: 24 }}>
-          <h3 style={{ fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 20 }}>📐</span> Dimensions (cm)
-          </h3>
+        <div className="glass" style={{ padding:32, marginBottom:24 }}>
+          <h3 style={{ fontWeight:700, marginBottom:20, display:'flex', alignItems:'center', gap:8 }}><span style={{ fontSize:20 }}>📐</span> Dimensions (cm)</h3>
           <div className="grid-3">
-            {[['length', 'Length'], ['width', 'Width'], ['height', 'Height']].map(([k, label]) => (
+            {[['length','Length'],['width','Width'],['height','Height']].map(([k,label]) => (
               <div key={k}>
                 <label className="label">{label}</label>
-                <input
-                  type="number"
-                  className="input-field"
-                  value={form[k]}
-                  onChange={e => set(k, e.target.value)}
-                  min={10}
-                  max={500}
-                />
+                <input type="number" className="input-field" value={form[k]} onChange={e => set(k,e.target.value)} min={10} max={500} />
               </div>
             ))}
           </div>
-          {/* Visual dimension preview */}
-          <div style={{ marginTop: 20, padding: 16, background: 'var(--bg)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ fontSize: 13, color: 'var(--text2)' }}>Preview ratio:</div>
-            <div style={{
-              width: Math.min(form.length / 3, 120),
-              height: Math.min(form.height / 3, 60),
-              background: 'linear-gradient(135deg, rgba(124,92,252,0.3), rgba(91,138,247,0.3))',
-              border: '1px solid rgba(124,92,252,0.5)',
-              borderRadius: 4,
-              transition: 'all 0.3s',
-            }} />
-            <div style={{ fontSize: 12, color: 'var(--text3)' }}>{form.length} × {form.width} × {form.height} cm</div>
-          </div>
-        </div>
-<div style={{ marginTop: 30 }}>
-  <h3 style={{ fontWeight: 700 }}>🪑 3D Chair Preview</h3>
-
-  <Chair3D
-    length={+form.length}
-    width={+form.width}
-    height={+form.height}
-    color={
-      form.color === "Matte Black" ? "#1a1a1a" :
-      form.color === "Glossy White" ? "#ffffff" :
-      form.color === "Wooden Finish" ? "#a0672a" :
-      form.color === "Gun Metal" ? "#4a4a5a" :
-      form.color === "Rose Gold" ? "#b87066" :
-      form.color === "Chrome Silver" ? "#c0c0c0" :
-      "#848c67"
-    }
-  />
-</div>
-        {/* Material */}
-        <div className="glass" style={{ padding: 32, marginBottom: 24 }}>
-          <h3 style={{ fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 20 }}>⚗️</span> Material
-          </h3>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            {MATERIALS.map(m => (
-              <button key={m} className={`chip ${form.material === m ? 'active' : ''}`} onClick={() => set('material', m)}>
-                {m}
-              </button>
-            ))}
-          </div>
-          <div style={{ marginTop: 16, padding: 12, background: 'var(--bg)', borderRadius: 10, fontSize: 13, color: 'var(--text2)' }}>
-            {form.material === 'Steel' && '🔩 High tensile steel — most affordable, extremely durable. ₹85/kg'}
-            {form.material === 'Aluminum' && '⚡ Lightweight aluminum — corrosion resistant, premium look. ₹210/kg'}
-            {form.material === 'Stainless Steel' && '✨ 304-grade stainless — food-safe, mirror polish ready. ₹320/kg'}
+          <div style={{ marginTop:20, padding:16, background:'var(--bg)', borderRadius:12, display:'flex', alignItems:'center', gap:12 }}>
+            <div style={{ fontSize:13, color:'var(--text2)' }}>Preview ratio:</div>
+            <div style={{ width:Math.min(form.length/3,120), height:Math.min(form.height/3,60), background:'linear-gradient(135deg,rgba(124,92,252,0.3),rgba(91,138,247,0.3))', border:'1px solid rgba(124,92,252,0.5)', borderRadius:4, transition:'all 0.3s' }} />
+            <div style={{ fontSize:12, color:'var(--text3)' }}>{form.length} × {form.width} × {form.height} cm</div>
           </div>
         </div>
 
-        {/* Color */}
-        <div className="glass" style={{ padding: 32, marginBottom: 24 }}>
-          <h3 style={{ fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 20 }}>🎨</span> Color & Finish
-          </h3>
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-            {COLORS.map(c => (
-              <div key={c.name} style={{ textAlign: 'center' }}>
-                <div
-                  className={`color-swatch ${form.color === c.name ? 'selected' : ''}`}
-                  style={{ background: c.hex, border: c.hex === '#f5f5f5' ? '3px solid #333' : '3px solid transparent' }}
-                  onClick={() => set('color', c.name)}
-                />
-                <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 6, width: 60, lineHeight: 1.2 }}>{c.name}</div>
+        <div className="glass" style={{ padding:32, marginBottom:24 }}>
+          <h3 style={{ fontWeight:700, marginBottom:20, display:'flex', alignItems:'center', gap:8 }}><span style={{ fontSize:20 }}>⚗️</span> Material</h3>
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+            {MATERIALS2.map(m => <button key={m} className={`chip ${form.material===m?'active':''}`} onClick={() => set('material',m)}>{m}</button>)}
+          </div>
+        </div>
+
+        <div className="glass" style={{ padding:32, marginBottom:24 }}>
+          <h3 style={{ fontWeight:700, marginBottom:20, display:'flex', alignItems:'center', gap:8 }}><span style={{ fontSize:20 }}>🎨</span> Color & Finish</h3>
+          <div style={{ display:'flex', gap:16, flexWrap:'wrap', alignItems:'center' }}>
+            {COLORS2.map(c => (
+              <div key={c.name} style={{ textAlign:'center' }}>
+                <div className={`color-swatch ${form.color===c.name?'selected':''}`} style={{ background:c.hex, border:c.hex==='#f5f5f5'?'3px solid #333':'3px solid transparent' }} onClick={() => set('color',c.name)} />
+                <div style={{ fontSize:10, color:'var(--text3)', marginTop:6, width:60, lineHeight:1.2 }}>{c.name}</div>
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 16, padding: 12, background: 'var(--bg)', borderRadius: 10, fontSize: 13, color: 'var(--text2)' }}>
-            Selected: <strong style={{ color: 'var(--text)' }}>{form.color}</strong>
-          </div>
         </div>
 
-        {/* Theme */}
-        <div className="glass" style={{ padding: 32, marginBottom: 24 }}>
-          <h3 style={{ fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 20 }}>🏛️</span> Design Theme
-          </h3>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            {THEMES.map(t => (
-              <button key={t} className={`chip ${form.theme === t ? 'active' : ''}`} onClick={() => set('theme', t)}>
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Features */}
-        <div className="glass" style={{ padding: 32, marginBottom: 40 }}>
-          <h3 style={{ fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 20 }}>⚙️</span> Additional Features
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className="glass" style={{ padding:32, marginBottom:24 }}>
+          <h3 style={{ fontWeight:700, marginBottom:20, display:'flex', alignItems:'center', gap:8 }}><span style={{ fontSize:20 }}>⚙️</span> Additional Features</h3>
+          <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
             {FEATURES.map(f => (
-              <div key={f.id} className={`toggle-wrap ${form.features[f.id] ? 'on' : ''}`} onClick={() => toggleFeature(f.id)}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <span style={{ fontSize: 20 }}>{f.icon}</span>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: 15 }}>{f.label}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text3)' }}>{f.cost}</div>
-                  </div>
+              <div key={f.id} className={`toggle-wrap ${form.features[f.id]?'on':''}`} onClick={() => toggleFeature(f.id)}>
+                <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+                  <span style={{ fontSize:20 }}>{f.icon}</span>
+                  <div><div style={{ fontWeight:600, fontSize:15 }}>{f.label}</div><div style={{ fontSize:13, color:'var(--text3)' }}>{f.cost}</div></div>
                 </div>
-                <div className={`toggle ${form.features[f.id] ? 'on' : ''}`} />
+                <div className={`toggle ${form.features[f.id]?'on':''}`} />
               </div>
             ))}
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+        <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
           <button className="btn-secondary" onClick={onBack}>← Back</button>
-          <button className="btn-primary" onClick={handleNext}>Generate AI Designs →</button>
+          <button className="btn-primary" onClick={() => onNext({ dimensions:{ length:+form.length, width:+form.width, height:+form.height }, material:form.material, color:form.color, theme:form.theme, features:form.features })}>
+            Generate AI Designs →
+          </button>
         </div>
       </div>
     </div>
   );
 }
 
-// ─── STEP 3: AI DESIGN GENERATION ────────────────────────────────────────────
+// ── STEP 3: AI DESIGNS ───────────────────────────────────────────────────────
 function AIGenerationStep({ onNext, onBack, data }) {
   const [loading, setLoading] = useState(true);
   const [designs, setDesigns] = useState([]);
@@ -1181,135 +1194,59 @@ function AIGenerationStep({ onNext, onBack, data }) {
   const [loadMsg, setLoadMsg] = useState('Initializing AI model...');
 
   useEffect(() => {
-    const msgs = [
-      'Initializing AI model...',
-      'Analyzing your preferences...',
-      'Generating design variants...',
-      'Optimizing proportions...',
-      'Finalizing designs ✦',
-    ];
+    const msgs = ['Initializing AI model...','Analyzing your preferences...','Generating design variants...','Optimizing proportions...','Finalizing designs ✦'];
     let i = 0;
     const interval = setInterval(() => {
       i++;
       if (i < msgs.length) setLoadMsg(msgs[i]);
-      else {
-        clearInterval(interval);
-        setDesigns(getDesigns(data.category));
-        setLoading(false);
-      }
+      else { clearInterval(interval); setDesigns(getDesigns(data.category)); setLoading(false); }
     }, 700);
     return () => clearInterval(interval);
   }, []);
 
-  const styleIcons = { Industrial: '🔩', Minimal: '⬜', Premium: '💎', Modern: '▲' };
-  const complexityColors = { Low: '#38d9a9', Medium: '#f5c842', High: '#ff7eb3' };
+  const styleIcons = { Industrial:'🔩', Minimal:'⬜', Premium:'💎', Modern:'▲' };
+  const complexityColors = { Low:'#38d9a9', Medium:'#f5c842', High:'#ff7eb3' };
 
   return (
-    <div className="container" style={{ paddingTop: 120, paddingBottom: 80 }}>
+    <div className="container" style={{ paddingTop:120, paddingBottom:80 }}>
       <StepProgress current={2} total={7} />
-      <div style={{ marginTop: 32 }}>
+      <div style={{ marginTop:32 }}>
         <SectionHeader tag="Step 3 of 7" title="AI Design Options" sub={`Your ${data.subtype} ${data.category} — ${designs.length} unique designs generated.`} />
-
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '80px 0' }}>
-            <div className="spinner" style={{ margin: '0 auto 24px' }} />
-            <p className="animate-pulse" style={{ color: 'var(--accent)', fontWeight: 600, fontSize: 18 }}>{loadMsg}</p>
-            <p style={{ color: 'var(--text3)', fontSize: 14, marginTop: 8 }}>Our AI is crafting unique designs for you...</p>
+          <div style={{ textAlign:'center', padding:'80px 0' }}>
+            <div className="spinner" style={{ margin:'0 auto 24px' }} />
+            <p className="animate-pulse" style={{ color:'var(--accent)', fontWeight:600, fontSize:18 }}>{loadMsg}</p>
           </div>
         ) : (
           <div className="animate-fadeIn">
-            <div className="grid-2" style={{ marginBottom: 40 }}>
-              {designs.map((d, i) => (
-                <div
-                  key={d.id}
-                  className={`card ${selected?.id === d.id ? 'selected' : ''}`}
-                  style={{ padding: 28, animationDelay: `${i * 0.1}s` }}
-                  onClick={() => setSelected(d)}
-                >
-                  {/* Design "image" placeholder */}
-                  <div style={{
-                    height: 180,
-                    borderRadius: 14,
-                    background: `linear-gradient(135deg, ${d.accent}22 0%, ${d.accent}44 50%, ${d.accent}11 100%)`,
-                    border: `1px solid ${d.accent}44`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: 20,
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}>
-                    {/* Abstract furniture silhouette */}
+            <div className="grid-2" style={{ marginBottom:40 }}>
+              {designs.map((d,i) => (
+                <div key={d.id} className={`card ${selected?.id===d.id?'selected':''}`} style={{ padding:28 }} onClick={() => setSelected(d)}>
+                  <div style={{ height:180, borderRadius:14, background:`linear-gradient(135deg,${d.accent}22,${d.accent}44)`, border:`1px solid ${d.accent}44`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:20, position:'relative', overflow:'hidden' }}>
                     <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
-                      {d.style === 'Industrial' && <>
-                        <rect x="10" y="60" width="100" height="8" rx="2" fill={d.accent} opacity="0.7"/>
-                        <rect x="15" y="68" width="8" height="30" rx="2" fill={d.accent} opacity="0.5"/>
-                        <rect x="97" y="68" width="8" height="30" rx="2" fill={d.accent} opacity="0.5"/>
-                        <rect x="15" y="30" width="90" height="30" rx="4" fill={d.accent} opacity="0.3"/>
-                      </>}
-                      {d.style === 'Minimal' && <>
-                        <rect x="20" y="50" width="80" height="4" rx="2" fill={d.accent} opacity="0.8"/>
-                        <line x1="30" y1="54" x2="30" y2="90" stroke={d.accent} strokeWidth="2" opacity="0.5"/>
-                        <line x1="90" y1="54" x2="90" y2="90" stroke={d.accent} strokeWidth="2" opacity="0.5"/>
-                        <rect x="25" y="25" width="70" height="25" rx="2" fill={d.accent} opacity="0.2"/>
-                      </>}
-                      {d.style === 'Premium' && <>
-                        <path d="M 20 55 L 60 20 L 100 55 L 100 85 L 20 85 Z" fill={d.accent} opacity="0.2"/>
-                        <path d="M 20 55 L 60 20 L 100 55" stroke={d.accent} strokeWidth="2" fill="none" opacity="0.7"/>
-                        <rect x="20" y="55" width="80" height="30" rx="4" fill={d.accent} opacity="0.15"/>
-                      </>}
-                      {d.style === 'Modern' && <>
-                        <rect x="15" y="40" width="90" height="35" rx="8" fill={d.accent} opacity="0.25"/>
-                        <rect x="25" y="75" width="15" height="20" rx="4" fill={d.accent} opacity="0.4"/>
-                        <rect x="80" y="75" width="15" height="20" rx="4" fill={d.accent} opacity="0.4"/>
-                      </>}
+                      {d.style==='Industrial' && <><rect x="10" y="60" width="100" height="8" rx="2" fill={d.accent} opacity="0.7"/><rect x="15" y="68" width="8" height="30" rx="2" fill={d.accent} opacity="0.5"/><rect x="97" y="68" width="8" height="30" rx="2" fill={d.accent} opacity="0.5"/><rect x="15" y="30" width="90" height="30" rx="4" fill={d.accent} opacity="0.3"/></>}
+                      {d.style==='Minimal' && <><rect x="20" y="50" width="80" height="4" rx="2" fill={d.accent} opacity="0.8"/><line x1="30" y1="54" x2="30" y2="90" stroke={d.accent} strokeWidth="2" opacity="0.5"/><line x1="90" y1="54" x2="90" y2="90" stroke={d.accent} strokeWidth="2" opacity="0.5"/><rect x="25" y="25" width="70" height="25" rx="2" fill={d.accent} opacity="0.2"/></>}
+                      {d.style==='Premium' && <><path d="M 20 55 L 60 20 L 100 55 L 100 85 L 20 85 Z" fill={d.accent} opacity="0.2"/><path d="M 20 55 L 60 20 L 100 55" stroke={d.accent} strokeWidth="2" fill="none" opacity="0.7"/><rect x="20" y="55" width="80" height="30" rx="4" fill={d.accent} opacity="0.15"/></>}
+                      {d.style==='Modern' && <><rect x="15" y="40" width="90" height="35" rx="8" fill={d.accent} opacity="0.25"/><rect x="25" y="75" width="15" height="20" rx="4" fill={d.accent} opacity="0.4"/><rect x="80" y="75" width="15" height="20" rx="4" fill={d.accent} opacity="0.4"/></>}
                     </svg>
-                    <div style={{
-                      position: 'absolute',
-                      top: 12,
-                      right: 12,
-                      background: 'rgba(0,0,0,0.5)',
-                      backdropFilter: 'blur(8px)',
-                      borderRadius: 8,
-                      padding: '4px 10px',
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: 'var(--gold)',
-                    }}>★ {d.rating}</div>
-                    {selected?.id === d.id && (
-                      <div style={{ position: 'absolute', top: 12, left: 12 }}>
-                        <span className="badge badge-purple">✓ Selected</span>
-                      </div>
-                    )}
+                    <div style={{ position:'absolute', top:12, right:12, background:'rgba(0,0,0,0.5)', backdropFilter:'blur(8px)', borderRadius:8, padding:'4px 10px', fontSize:12, fontWeight:600, color:'var(--gold)' }}>★ {d.rating}</div>
+                    {selected?.id===d.id && <div style={{ position:'absolute', top:12, left:12 }}><span className="badge badge-purple">✓ Selected</span></div>}
                   </div>
-
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                    <h3 style={{ fontWeight: 700, fontSize: 18 }}>{d.name}</h3>
-                    <span style={{ fontSize: 20 }}>{styleIcons[d.style] || '🔧'}</span>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10 }}>
+                    <h3 style={{ fontWeight:700, fontSize:18 }}>{d.name}</h3>
+                    <span style={{ fontSize:20 }}>{styleIcons[d.style]||'🔧'}</span>
                   </div>
-
-                  <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                  <div style={{ display:'flex', gap:8, marginBottom:12 }}>
                     <span className="badge badge-purple">{d.style}</span>
-                    <span style={{ ...{ padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600 }, background: `${complexityColors[d.complexity]}22`, color: complexityColors[d.complexity] }}>
-                      {d.complexity} Complexity
-                    </span>
+                    <span style={{ padding:'4px 12px', borderRadius:20, fontSize:12, fontWeight:600, background:`${complexityColors[d.complexity]}22`, color:complexityColors[d.complexity] }}>{d.complexity} Complexity</span>
                   </div>
-
-                  <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.6 }}>{d.description}</p>
+                  <p style={{ color:'var(--text2)', fontSize:14, lineHeight:1.6 }}>{d.description}</p>
                 </div>
               ))}
             </div>
-
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+            <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
               <button className="btn-secondary" onClick={onBack}>← Back</button>
-              <button
-                className="btn-primary"
-                onClick={() => onNext({ selectedDesign: selected })}
-                disabled={!selected}
-                style={{ opacity: !selected ? 0.4 : 1, cursor: !selected ? 'not-allowed' : 'pointer' }}
-              >
-                Customize This Design →
-              </button>
+              <button className="btn-primary" onClick={() => onNext({ selectedDesign:selected })} disabled={!selected} style={{ opacity:!selected?0.4:1 }}>Customize This Design →</button>
             </div>
           </div>
         )}
@@ -1318,284 +1255,129 @@ function AIGenerationStep({ onNext, onBack, data }) {
   );
 }
 
-// ─── STEP 4: DESIGN CUSTOMIZATION ────────────────────────────────────────────
+// ── STEPS 4-7 (abbreviated) ──────────────────────────────────────────────────
 function DesignCustomizationStep({ onNext, onBack, data }) {
-  const [mods, setMods] = useState({
-    color: data.color || 'Matte Black',
-    length: data.dimensions?.length || 120,
-    width: data.dimensions?.width || 60,
-    height: data.dimensions?.height || 75,
-    features: data.features || {},
-  });
-
-  const set = (k, v) => setMods(m => ({ ...m, [k]: v }));
-  const toggleF = (id) => set('features', { ...mods.features, [id]: !mods.features[id] });
-
-  const selColor = COLORS.find(c => c.name === mods.color) || COLORS[0];
+  const [mods, setMods] = useState({ color:data.color||'Matte Black', length:data.dimensions?.length||120, width:data.dimensions?.width||60, height:data.dimensions?.height||75, features:data.features||{} });
+  const set = (k,v) => setMods(m => ({ ...m,[k]:v }));
+  const toggleF = (id) => set('features', { ...mods.features,[id]:!mods.features[id] });
+  const selColor = COLORS2.find(c => c.name===mods.color)||COLORS2[0];
   const design = data.selectedDesign;
-
   return (
-    <div className="container" style={{ paddingTop: 120, paddingBottom: 80 }}>
+    <div className="container" style={{ paddingTop:120, paddingBottom:80 }}>
       <StepProgress current={3} total={7} />
-      <div style={{ marginTop: 32, maxWidth: 900, margin: '32px auto 0' }}>
-        <SectionHeader tag="Step 4 of 7" title={`Refine "${design?.name}"`} sub="Fine-tune your selected design. Changes update the live preview instantly." />
-
-        <div className="grid-2" style={{ gap: 32, marginBottom: 40 }}>
-          {/* Preview */}
+      <div style={{ marginTop:32, maxWidth:900, margin:'32px auto 0' }}>
+        <SectionHeader tag="Step 4 of 7" title={`Refine "${design?.name}"`} sub="Fine-tune your selected design." />
+        <div className="grid-2" style={{ gap:32, marginBottom:40 }}>
           <div>
-            <div style={{
-              height: 380,
-              borderRadius: 24,
-              background: `linear-gradient(135deg, ${design?.accent || '#7c5cfc'}22, ${design?.accent || '#7c5cfc'}44)`,
-              border: `1px solid ${design?.accent || '#7c5cfc'}44`,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative',
-              overflow: 'hidden',
-            }}>
-              {/* Live preview with color tint */}
-              <div style={{
-                width: Math.min(mods.length * 1.2, 200),
-                height: Math.min(mods.height * 1.2, 160),
-                background: `linear-gradient(135deg, ${selColor.hex}cc, ${selColor.hex}88)`,
-                borderRadius: 12,
-                border: `2px solid ${selColor.hex}`,
-                boxShadow: `0 20px 60px ${selColor.hex}44`,
-                transition: 'all 0.4s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>
-                  {mods.length}×{mods.width}×{mods.height}
-                </span>
-              </div>
-              <div style={{ position: 'absolute', bottom: 16, left: 0, right: 0, textAlign: 'center' }}>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Live Preview — {design?.style} Style</span>
+            <div style={{ height:380, borderRadius:24, background:`linear-gradient(135deg,${design?.accent||'#7c5cfc'}22,${design?.accent||'#7c5cfc'}44)`, border:`1px solid ${design?.accent||'#7c5cfc'}44`, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', position:'relative' }}>
+              <div style={{ width:Math.min(mods.length*1.2,200), height:Math.min(mods.height*1.2,160), background:`linear-gradient(135deg,${selColor.hex}cc,${selColor.hex}88)`, borderRadius:12, border:`2px solid ${selColor.hex}`, transition:'all 0.4s ease', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <span style={{ fontSize:11, color:'rgba(255,255,255,0.7)', fontWeight:600 }}>{mods.length}×{mods.width}×{mods.height}</span>
               </div>
             </div>
-
-            {/* Selected options summary */}
-            <div style={{ marginTop: 20, padding: 20, background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)' }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Current Config</div>
-              {[
-                ['Design', design?.name],
-                ['Color', mods.color],
-                ['Material', data.material],
-                ['Theme', design?.style],
-                ['Dimensions', `${mods.length} × ${mods.width} × ${mods.height} cm`],
-              ].map(([k, v]) => (
-                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
-                  <span style={{ color: 'var(--text2)' }}>{k}</span>
-                  <span style={{ fontWeight: 600 }}>{v}</span>
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', gap:24 }}>
+            <div className="glass" style={{ padding:24 }}>
+              <div className="label">🎨 Color & Finish</div>
+              <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+                {COLORS2.map(c => (
+                  <div key={c.name} style={{ textAlign:'center' }}>
+                    <div className={`color-swatch ${mods.color===c.name?'selected':''}`} style={{ background:c.hex, border:c.hex==='#f5f5f5'?'3px solid #555':'3px solid transparent' }} onClick={() => set('color',c.name)} />
+                    <div style={{ fontSize:9, color:'var(--text3)', marginTop:4, width:50 }}>{c.name}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="glass" style={{ padding:24 }}>
+              <div className="label">📐 Adjust Dimensions (cm)</div>
+              {[['length','Length',20,400],['width','Width',20,300],['height','Height',20,250]].map(([k,label,min,max]) => (
+                <div key={k} style={{ marginBottom:16 }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:8 }}>
+                    <span style={{ fontSize:13, color:'var(--text2)' }}>{label}</span>
+                    <span style={{ fontSize:13, fontWeight:700, color:'var(--accent)' }}>{mods[k]} cm</span>
+                  </div>
+                  <input type="range" min={min} max={max} value={mods[k]} onChange={e => set(k,+e.target.value)} style={{ width:'100%', accentColor:'var(--accent)' }} />
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Controls */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            {/* Color */}
-            <div className="glass" style={{ padding: 24 }}>
-              <div className="label">🎨 Color & Finish</div>
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                {COLORS.map(c => (
-                  <div key={c.name} style={{ textAlign: 'center' }}>
-                    <div
-                      className={`color-swatch ${mods.color === c.name ? 'selected' : ''}`}
-                      style={{ background: c.hex, border: c.hex === '#f5f5f5' ? '3px solid #555' : '3px solid transparent' }}
-                      onClick={() => set('color', c.name)}
-                    />
-                    <div style={{ fontSize: 9, color: 'var(--text3)', marginTop: 4, width: 50 }}>{c.name}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Dimensions */}
-            <div className="glass" style={{ padding: 24 }}>
-              <div className="label">📐 Adjust Dimensions (cm)</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                {[['length', 'Length', 20, 400], ['width', 'Width', 20, 300], ['height', 'Height', 20, 250]].map(([k, label, min, max]) => (
-                  <div key={k}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                      <span style={{ fontSize: 13, color: 'var(--text2)' }}>{label}</span>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent)' }}>{mods[k]} cm</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={min}
-                      max={max}
-                      value={mods[k]}
-                      onChange={e => set(k, +e.target.value)}
-                      style={{ width: '100%', accentColor: 'var(--accent)' }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Features */}
-            <div className="glass" style={{ padding: 24 }}>
-              <div className="label">⚙️ Features</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {FEATURES.map(f => (
-                  <div key={f.id} className={`toggle-wrap ${mods.features[f.id] ? 'on' : ''}`} style={{ padding: '10px 14px' }} onClick={() => toggleF(f.id)}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ fontSize: 16 }}>{f.icon}</span>
-                      <span style={{ fontSize: 14, fontWeight: 500 }}>{f.label}</span>
-                    </div>
-                    <div className={`toggle ${mods.features[f.id] ? 'on' : ''}`} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
-
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+        <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
           <button className="btn-secondary" onClick={onBack}>← Back</button>
-          <button className="btn-primary" onClick={() => onNext({
-            dimensions: { length: mods.length, width: mods.width, height: mods.height },
-            color: mods.color,
-            features: mods.features,
-          })}>
-            Get Cost Estimate →
-          </button>
+          <button className="btn-primary" onClick={() => onNext({ dimensions:{ length:mods.length, width:mods.width, height:mods.height }, color:mods.color, features:mods.features })}>Get Cost Estimate →</button>
         </div>
       </div>
     </div>
   );
 }
 
-// ─── STEP 5: COST ESTIMATION ─────────────────────────────────────────────────
 function CostEstimationStep({ onNext, onBack, data }) {
   const [hasOwnMaterial, setHasOwnMaterial] = useState(false);
   const [costs, setCosts] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const calc = useCallback((ownMat) => {
     setLoading(true);
     setTimeout(() => {
-      const { length = 120, width = 60, height = 75 } = data.dimensions || {};
-      const rates = { 'Steel': 85, 'Aluminum': 210, 'Stainless Steel': 320 };
-      const finishes = { 'Matte Black': 1.0, 'Glossy White': 1.15, 'Wooden Finish': 1.25, 'Gun Metal': 1.1, 'Rose Gold': 1.3, 'Chrome Silver': 1.35 };
-
-      const surfaceArea = 2 * (length * width + width * height + length * height) / 10000;
-      const weightKg = surfaceArea * 0.2 * (data.material === 'Aluminum' ? 2.7 : 7.8);
-      const rate = rates[data.material] || 85;
-      const finish = finishes[data.color] || 1.0;
-
-      let materialCost = Math.round(weightKg * rate * finish);
-      const cuttingCost = Math.round(800 + (length * width * height) / 10000 * 50);
-      const fabricationCost = Math.round(materialCost * 0.20);
-      const wasteCost = Math.round(materialCost * (0.07 + Math.random() * 0.08));
-
+      const { length=120, width=60, height=75 } = data.dimensions||{};
+      const rates = { 'Steel':85, 'Aluminum':210, 'Stainless Steel':320 };
+      const finishes = { 'Matte Black':1.0, 'Glossy White':1.15, 'Wooden Finish':1.25, 'Gun Metal':1.1, 'Rose Gold':1.3, 'Chrome Silver':1.35 };
+      const surfaceArea = 2*(length*width+width*height+length*height)/10000;
+      const weightKg = surfaceArea*0.2*(data.material==='Aluminum'?2.7:7.8);
+      const rate = rates[data.material]||85;
+      const finish = finishes[data.color]||1.0;
+      let materialCost = Math.round(weightKg*rate*finish);
+      const cuttingCost = Math.round(800+(length*width*height)/10000*50);
+      const fabricationCost = Math.round(materialCost*0.20);
+      const wasteCost = Math.round(materialCost*(0.07+Math.random()*0.08));
       let featureCost = 0;
       if (data.features?.storage) featureCost += 1200;
       if (data.features?.drawers) featureCost += 800;
       if (data.features?.adjustableHeight) featureCost += 600;
-
-      if (ownMat) materialCost = Math.round(materialCost * 0.12);
-
-      const total = materialCost + cuttingCost + fabricationCost + wasteCost + featureCost;
-      setCosts({ materialCost, cuttingCost, fabricationCost, wasteCost, featureCost, total, weightKg: Math.round(weightKg * 10) / 10 });
+      if (ownMat) materialCost = Math.round(materialCost*0.12);
+      const total = materialCost+cuttingCost+fabricationCost+wasteCost+featureCost;
+      setCosts({ materialCost, cuttingCost, fabricationCost, wasteCost, featureCost, total, weightKg:Math.round(weightKg*10)/10 });
       setLoading(false);
     }, 600);
   }, [data]);
-
   useEffect(() => { calc(hasOwnMaterial); }, [hasOwnMaterial]);
-
   const fmt = n => `₹${Math.round(n).toLocaleString('en-IN')}`;
-
   const rows = costs ? [
-    { label: '🏗️ Material Cost', desc: `${data.material} · ${data.color}`, val: costs.materialCost, color: '#7c5cfc' },
-    { label: '✂️ Cutting Cost', desc: 'CNC plasma/laser cutting', val: costs.cuttingCost, color: '#5b8af7' },
-    { label: '🔧 Fabrication Cost', desc: 'Welding, grinding, assembly', val: costs.fabricationCost, color: '#38d9a9' },
-    { label: '♻️ Material Waste', desc: 'Off-cuts & scrap estimation', val: costs.wasteCost, color: '#f5c842' },
+    { label:'🏗️ Material Cost', desc:`${data.material} · ${data.color}`, val:costs.materialCost, color:'#7c5cfc' },
+    { label:'✂️ Cutting Cost', desc:'CNC plasma/laser cutting', val:costs.cuttingCost, color:'#5b8af7' },
+    { label:'🔧 Fabrication Cost', desc:'Welding, grinding, assembly', val:costs.fabricationCost, color:'#38d9a9' },
+    { label:'♻️ Material Waste', desc:'Off-cuts & scrap estimation', val:costs.wasteCost, color:'#f5c842' },
   ] : [];
-
-  if (costs?.featureCost > 0) {
-    rows.push({ label: '⚙️ Feature Add-ons', desc: 'Storage / Drawers / Height adjust', val: costs.featureCost, color: '#ff7eb3' });
-  }
-
+  if (costs?.featureCost>0) rows.push({ label:'⚙️ Feature Add-ons', desc:'Storage / Drawers / Height adjust', val:costs.featureCost, color:'#ff7eb3' });
   return (
-    <div className="container" style={{ paddingTop: 120, paddingBottom: 80 }}>
+    <div className="container" style={{ paddingTop:120, paddingBottom:80 }}>
       <StepProgress current={4} total={7} />
-      <div style={{ marginTop: 32, maxWidth: 700, margin: '32px auto 0' }}>
+      <div style={{ marginTop:32, maxWidth:700, margin:'32px auto 0' }}>
         <SectionHeader tag="Step 5 of 7" title="Cost Breakdown" sub="Transparent, itemized pricing. No hidden charges." />
-
-        {/* Own material toggle */}
-        <div
-          className={`toggle-wrap ${hasOwnMaterial ? 'on' : ''}`}
-          style={{ marginBottom: 32, padding: '20px 24px' }}
-          onClick={() => setHasOwnMaterial(v => !v)}
-        >
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>🏭 I have my own material</div>
-            <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 3 }}>
-              {hasOwnMaterial ? 'Material cost reduced — only processing fees apply' : 'Toggle to reduce material cost significantly'}
-            </div>
-          </div>
-          <div className={`toggle ${hasOwnMaterial ? 'on' : ''}`} />
+        <div className={`toggle-wrap ${hasOwnMaterial?'on':''}`} style={{ marginBottom:32, padding:'20px 24px' }} onClick={() => setHasOwnMaterial(v=>!v)}>
+          <div><div style={{ fontWeight:700, fontSize:16 }}>🏭 I have my own material</div><div style={{ fontSize:13, color:'var(--text2)', marginTop:3 }}>{hasOwnMaterial?'Material cost reduced':'Toggle to reduce material cost'}</div></div>
+          <div className={`toggle ${hasOwnMaterial?'on':''}`} />
         </div>
-
         {loading ? (
-          <div style={{ textAlign: 'center', padding: 60 }}>
-            <div className="spinner" style={{ margin: '0 auto 20px' }} />
-            <p style={{ color: 'var(--text2)' }}>Calculating costs...</p>
-          </div>
+          <div style={{ textAlign:'center', padding:60 }}><div className="spinner" style={{ margin:'0 auto 20px' }} /><p style={{ color:'var(--text2)' }}>Calculating costs...</p></div>
         ) : (
           <div className="animate-fadeIn">
-            {/* Weight info */}
-            <div style={{ padding: '12px 20px', background: 'rgba(91,138,247,0.1)', border: '1px solid rgba(91,138,247,0.3)', borderRadius: 12, marginBottom: 24, fontSize: 14, color: 'var(--text2)' }}>
-              Estimated weight: <strong style={{ color: 'var(--text)' }}>{costs?.weightKg} kg</strong> · Material: <strong style={{ color: 'var(--text)' }}>{data.material}</strong>
-            </div>
-
-            {/* Cost rows */}
-            <div className="glass" style={{ padding: 8, marginBottom: 24 }}>
-              {rows.map((r, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '18px 20px', borderBottom: i < rows.length - 1 ? '1px solid var(--border)' : 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div style={{ width: 4, height: 40, borderRadius: 2, background: r.color }} />
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: 15 }}>{r.label}</div>
-                      <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 2 }}>{r.desc}</div>
-                    </div>
+            <div className="glass" style={{ padding:8, marginBottom:24 }}>
+              {rows.map((r,i) => (
+                <div key={i} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'18px 20px', borderBottom:i<rows.length-1?'1px solid var(--border)':'none' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+                    <div style={{ width:4, height:40, borderRadius:2, background:r.color }} />
+                    <div><div style={{ fontWeight:600, fontSize:15 }}>{r.label}</div><div style={{ fontSize:12, color:'var(--text3)', marginTop:2 }}>{r.desc}</div></div>
                   </div>
-                  <div style={{ fontWeight: 700, fontSize: 18, color: r.color }}>{fmt(r.val)}</div>
+                  <div style={{ fontWeight:700, fontSize:18, color:r.color }}>{fmt(r.val)}</div>
                 </div>
               ))}
             </div>
-
-            {/* Total */}
-            <div style={{
-              padding: 28,
-              background: 'linear-gradient(135deg, rgba(124,92,252,0.15), rgba(91,138,247,0.15))',
-              border: '1px solid rgba(124,92,252,0.4)',
-              borderRadius: 20,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 40,
-              boxShadow: '0 0 40px rgba(124,92,252,0.2)',
-            }}>
-              <div>
-                <div style={{ fontWeight: 800, fontSize: 20 }}>Total Cost</div>
-                {hasOwnMaterial && <div style={{ fontSize: 13, color: 'var(--accent3)', marginTop: 4 }}>✓ Own material discount applied</div>}
-              </div>
-              <div className="gradient-text" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 800 }}>
-                {fmt(costs?.total)}
-              </div>
+            <div style={{ padding:28, background:'linear-gradient(135deg,rgba(124,92,252,0.15),rgba(91,138,247,0.15))', border:'1px solid rgba(124,92,252,0.4)', borderRadius:20, display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:40 }}>
+              <div><div style={{ fontWeight:800, fontSize:20 }}>Total Cost</div>{hasOwnMaterial&&<div style={{ fontSize:13, color:'var(--accent3)', marginTop:4 }}>✓ Own material discount applied</div>}</div>
+              <div className="gradient-text" style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(28px,4vw,42px)', fontWeight:800 }}>{fmt(costs?.total)}</div>
             </div>
-
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+            <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
               <button className="btn-secondary" onClick={onBack}>← Back</button>
-              <button className="btn-primary" onClick={() => onNext({ costs, hasOwnMaterial })}>
-                Optimize Material Usage →
-              </button>
+              <button className="btn-primary" onClick={() => onNext({ costs, hasOwnMaterial })}>Optimize Material Usage →</button>
             </div>
           </div>
         )}
@@ -1604,155 +1386,56 @@ function CostEstimationStep({ onNext, onBack, data }) {
   );
 }
 
-// ─── STEP 6: OPTIMIZATION ────────────────────────────────────────────────────
 function OptimizationStep({ onNext, onBack, data }) {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState(null);
   const [loadMsg, setLoadMsg] = useState('Loading nesting algorithm...');
-
   useEffect(() => {
-    const msgs = [
-      'Loading nesting algorithm...',
-      'Analyzing sheet dimensions...',
-      'Running bin-packing optimization...',
-      'Calculating cutting paths...',
-      'Optimization complete ✦',
-    ];
+    const msgs = ['Loading nesting algorithm...','Analyzing sheet dimensions...','Running bin-packing optimization...','Calculating cutting paths...','Optimization complete ✦'];
     let i = 0;
     const interval = setInterval(() => {
       i++;
       if (i < msgs.length) setLoadMsg(msgs[i]);
       else {
         clearInterval(interval);
-        // Compute optimization
-        const { length = 120, width = 60, height = 75 } = data.dimensions || {};
-        const wasteBefore = Math.round(15 + Math.random() * 12);
-        const wasteAfter = Math.round(wasteBefore * 0.62);
-        const saved = wasteBefore - wasteAfter;
-        const savedCost = Math.round((data.costs?.wasteCost || 500) * (saved / wasteBefore));
-        const sheets = Math.ceil(2 * (length * width + width * height + length * height) / 20000);
-
-        setResult({
-          wasteBefore,
-          wasteAfter,
-          saved,
-          savedCost,
-          sheets: Math.max(1, sheets),
-          piecesPerSheet: Math.round(20000 / (length * width) * 0.85),
-          sheetSize: '240 × 120 cm',
-        });
+        const { length=120, width=60, height=75 } = data.dimensions||{};
+        const wasteBefore = Math.round(15+Math.random()*12);
+        const wasteAfter = Math.round(wasteBefore*0.62);
+        const saved = wasteBefore-wasteAfter;
+        const savedCost = Math.round((data.costs?.wasteCost||500)*(saved/wasteBefore));
+        const sheets = Math.ceil(2*(length*width+width*height+length*height)/20000);
+        setResult({ wasteBefore, wasteAfter, saved, savedCost, sheets:Math.max(1,sheets), piecesPerSheet:Math.round(20000/(length*width)*0.85), sheetSize:'240 × 120 cm' });
         setLoading(false);
       }
     }, 700);
     return () => clearInterval(interval);
   }, []);
-
   const renderNestGrid = (filled, total, cols) => {
-    const cells = Array.from({ length: total }, (_, i) => i < filled);
-    return (
-      <div className="nest-grid" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
-        {cells.map((f, i) => <div key={i} className={`nest-cell ${f ? 'filled' : 'empty'}`} />)}
-      </div>
-    );
+    const cells = Array.from({ length:total }, (_,i) => i<filled);
+    return <div className="nest-grid" style={{ gridTemplateColumns:`repeat(${cols},1fr)` }}>{cells.map((f,i) => <div key={i} className={`nest-cell ${f?'filled':'empty'}`} />)}</div>;
   };
-
   return (
-    <div className="container" style={{ paddingTop: 120, paddingBottom: 80 }}>
+    <div className="container" style={{ paddingTop:120, paddingBottom:80 }}>
       <StepProgress current={5} total={7} />
-      <div style={{ marginTop: 32, maxWidth: 800, margin: '32px auto 0' }}>
-        <SectionHeader tag="Step 6 of 7" title="Material Optimization" sub="AI-powered sheet nesting reduces waste and saves you money." />
-
+      <div style={{ marginTop:32, maxWidth:800, margin:'32px auto 0' }}>
+        <SectionHeader tag="Step 6 of 7" title="Material Optimization" sub="AI-powered sheet nesting reduces waste and saves money." />
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '80px 0' }}>
-            <div className="spinner" style={{ margin: '0 auto 24px' }} />
-            <p className="animate-pulse" style={{ color: 'var(--accent)', fontWeight: 600, fontSize: 18 }}>{loadMsg}</p>
-            <div style={{ marginTop: 24, maxWidth: 300, margin: '24px auto 0' }}>
-              <div className="progress-bar">
-                <div className="progress-fill animate-pulse" style={{ width: '70%' }} />
-              </div>
-            </div>
-          </div>
+          <div style={{ textAlign:'center', padding:'80px 0' }}><div className="spinner" style={{ margin:'0 auto 24px' }} /><p className="animate-pulse" style={{ color:'var(--accent)', fontWeight:600, fontSize:18 }}>{loadMsg}</p></div>
         ) : (
           <div className="animate-fadeIn">
-            {/* Big stats */}
-            <div className="grid-3" style={{ marginBottom: 32 }}>
-              {[
-                { icon: '♻️', label: 'Waste Before', val: `${result.wasteBefore}%`, color: '#ff5757', sub: 'Without optimization' },
-                { icon: '✅', label: 'Waste After', val: `${result.wasteAfter}%`, color: '#38d9a9', sub: 'With AI nesting' },
-                { icon: '💰', label: 'Cost Saved', val: `₹${result.savedCost.toLocaleString('en-IN')}`, color: '#f5c842', sub: 'Material savings' },
-              ].map((s, i) => (
-                <div key={i} style={{ padding: 28, background: 'var(--surface)', border: `1px solid ${s.color}33`, borderRadius: 20, textAlign: 'center' }}>
-                  <div style={{ fontSize: 32, marginBottom: 8 }}>{s.icon}</div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, fontWeight: 800, color: s.color }}>{s.val}</div>
-                  <div style={{ fontWeight: 600, marginTop: 4 }}>{s.label}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 4 }}>{s.sub}</div>
+            <div className="grid-3" style={{ marginBottom:32 }}>
+              {[{ icon:'♻️', label:'Waste Before', val:`${result.wasteBefore}%`, color:'#ff5757', sub:'Without optimization' }, { icon:'✅', label:'Waste After', val:`${result.wasteAfter}%`, color:'#38d9a9', sub:'With AI nesting' }, { icon:'💰', label:'Cost Saved', val:`₹${result.savedCost.toLocaleString('en-IN')}`, color:'#f5c842', sub:'Material savings' }].map((s,i) => (
+                <div key={i} style={{ padding:28, background:'var(--surface)', border:`1px solid ${s.color}33`, borderRadius:20, textAlign:'center' }}>
+                  <div style={{ fontSize:32, marginBottom:8 }}>{s.icon}</div>
+                  <div style={{ fontFamily:"'Playfair Display',serif", fontSize:32, fontWeight:800, color:s.color }}>{s.val}</div>
+                  <div style={{ fontWeight:600, marginTop:4 }}>{s.label}</div>
+                  <div style={{ fontSize:12, color:'var(--text3)', marginTop:4 }}>{s.sub}</div>
                 </div>
               ))}
             </div>
-
-            {/* Waste reduction banner */}
-            <div style={{
-              padding: 24,
-              background: 'linear-gradient(135deg, rgba(56,217,169,0.1), rgba(56,217,169,0.05))',
-              border: '1px solid rgba(56,217,169,0.3)',
-              borderRadius: 16,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 16,
-              marginBottom: 24,
-            }}>
-              <span style={{ fontSize: 36 }}>🎯</span>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: 17, color: '#38d9a9' }}>Waste reduced by {result.saved}%</div>
-                <div style={{ fontSize: 14, color: 'var(--text2)', marginTop: 4 }}>Optimized cutting layout generated for {result.sheets} sheet(s) of {result.sheetSize} standard metal sheets.</div>
-              </div>
-            </div>
-
-            {/* Nesting visualization */}
-            <div className="glass" style={{ padding: 28, marginBottom: 32 }}>
-              <h3 style={{ fontWeight: 700, marginBottom: 6 }}>🔲 Sheet Nesting Layout</h3>
-              <p style={{ color: 'var(--text2)', fontSize: 13, marginBottom: 20 }}>
-                Visual representation of piece placement on {result.sheetSize} standard sheet
-              </p>
-
-              <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 8 }}>Standard Sheet ({result.sheetSize})</div>
-                  {renderNestGrid(
-                    Math.round(result.piecesPerSheet * (100 - result.wasteAfter) / 100),
-                    result.piecesPerSheet,
-                    Math.ceil(Math.sqrt(result.piecesPerSheet))
-                  )}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, marginBottom: 12, color: 'var(--text2)' }}>Legend</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    {[
-                      { color: 'linear-gradient(135deg, var(--accent), var(--accent2))', label: 'Furniture piece' },
-                      { color: 'rgba(255,87,87,0.1)', label: 'Material waste / offcut', border: '1px solid rgba(255,87,87,0.3)' },
-                    ].map((l, i) => (
-                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <div style={{ width: 24, height: 24, borderRadius: 4, background: l.color, border: l.border, flexShrink: 0 }} />
-                        <span style={{ fontSize: 13, color: 'var(--text2)' }}>{l.label}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={{ marginTop: 24, padding: 16, background: 'var(--bg)', borderRadius: 12 }}>
-                    <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 2 }}>
-                      <div>Sheets required: <strong style={{ color: 'var(--text)' }}>{result.sheets}</strong></div>
-                      <div>Sheet utilization: <strong style={{ color: '#38d9a9' }}>{100 - result.wasteAfter}%</strong></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+            <div style={{ display:'flex', gap:12, justifyContent:'center', marginTop:24 }}>
               <button className="btn-secondary" onClick={onBack}>← Back</button>
-              <button className="btn-primary" onClick={() => onNext({ optimization: result })}>
-                View Final Summary →
-              </button>
+              <button className="btn-primary" onClick={() => onNext({ optimization:result })}>View Final Summary →</button>
             </div>
           </div>
         )}
@@ -1761,326 +1444,105 @@ function OptimizationStep({ onNext, onBack, data }) {
   );
 }
 
-// ─── STEP 7: FINAL OUTPUT ────────────────────────────────────────────────────
 function FinalOutputStep({ data, onReset }) {
-  const [downloading, setDownloading] = useState(false);
-
-  const fmt = n => `₹${Math.round(n || 0).toLocaleString('en-IN')}`;
+  const fmt = n => `₹${Math.round(n||0).toLocaleString('en-IN')}`;
   const design = data.selectedDesign;
   const opt = data.optimization;
-
-  const handleDownload = () => {
-    setDownloading(true);
-    setTimeout(() => {
-      const summary = `
-METALCRAFT AI — MANUFACTURING SUMMARY
-======================================
-Generated: ${new Date().toLocaleString('en-IN')}
-
-DESIGN
-------
-Name: ${design?.name || 'Custom Design'}
-Style: ${design?.style || '-'}
-Category: ${data.category || '-'} (${data.subtype || '-'})
-
-SPECIFICATIONS
---------------
-Material: ${data.material || '-'}
-Finish: ${data.color || '-'}
-Dimensions: ${data.dimensions?.length || '-'} × ${data.dimensions?.width || '-'} × ${data.dimensions?.height || '-'} cm
-Theme: ${data.theme || '-'}
-Features: ${Object.entries(data.features || {}).filter(([, v]) => v).map(([k]) => k).join(', ') || 'None'}
-
-COST BREAKDOWN (INR)
---------------------
-Material:     ${fmt(data.costs?.materialCost)}
-Cutting:      ${fmt(data.costs?.cuttingCost)}
-Fabrication:  ${fmt(data.costs?.fabricationCost)}
-Waste:        ${fmt(data.costs?.wasteCost)}
-Features:     ${fmt(data.costs?.featureCost)}
-─────────────────────────────
-TOTAL:        ${fmt(data.costs?.total)}
-
-OPTIMIZATION
-------------
-Waste reduced by: ${opt?.saved || '-'}%
-Sheets required: ${opt?.sheets || '-'}
-Material saved: ${fmt(opt?.savedCost)}
-
-NOTES
------
-• This is a computer-generated estimate.
-• Final quote subject to site measurement.
-• Production time: 5-10 working days.
-      `.trim();
-
-      const blob = new Blob([summary], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `MetalCraft_${design?.name || 'Design'}_Summary.txt`;
-      a.click();
-      URL.revokeObjectURL(url);
-      setDownloading(false);
-    }, 800);
-  };
-
   return (
-    <div className="container" style={{ paddingTop: 120, paddingBottom: 80 }}>
+    <div className="container" style={{ paddingTop:120, paddingBottom:80 }}>
       <StepProgress current={6} total={7} />
-      <div style={{ marginTop: 32, maxWidth: 840, margin: '32px auto 0' }}>
-
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <div style={{ fontSize: 64, marginBottom: 16 }}>🎉</div>
-          <span className="badge badge-green" style={{ marginBottom: 16 }}>✦ Design Complete</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 800, marginBottom: 12 }}>
-            Your <span className="gradient-text">{design?.name}</span> is Ready
-          </h1>
-          <p style={{ color: 'var(--text2)', fontSize: 17 }}>Here's your complete manufacturing summary</p>
+      <div style={{ marginTop:32, maxWidth:840, margin:'32px auto 0' }}>
+        <div style={{ textAlign:'center', marginBottom:48 }}>
+          <div style={{ fontSize:64, marginBottom:16 }}>🎉</div>
+          <span className="badge badge-green" style={{ marginBottom:16 }}>✦ Design Complete</span>
+          <h1 style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(28px,4vw,48px)', fontWeight:800, marginBottom:12 }}>Your <span className="gradient-text">{design?.name||'Custom Design'}</span> is Ready</h1>
+          <p style={{ color:'var(--text2)', fontSize:17 }}>Here's your complete manufacturing summary</p>
         </div>
-
-        {/* Design Card */}
-        <div style={{
-          padding: 32,
-          background: `linear-gradient(135deg, ${design?.accent || '#7c5cfc'}15, var(--surface))`,
-          border: `1px solid ${design?.accent || '#7c5cfc'}40`,
-          borderRadius: 24,
-          marginBottom: 24,
-          display: 'flex',
-          gap: 28,
-          alignItems: 'center',
-          flexWrap: 'wrap',
-        }}>
-          <div style={{
-            width: 120,
-            height: 120,
-            borderRadius: 20,
-            background: `linear-gradient(135deg, ${design?.accent || '#7c5cfc'}33, ${design?.accent || '#7c5cfc'}66)`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 48,
-            flexShrink: 0,
-          }}>🔩</div>
-          <div style={{ flex: 1 }}>
-            <h2 style={{ fontWeight: 800, fontSize: 24, marginBottom: 6 }}>{design?.name || 'Custom Design'}</h2>
-            <p style={{ color: 'var(--text2)', fontSize: 15, marginBottom: 16 }}>{design?.description}</p>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <span className="badge badge-purple">{design?.style}</span>
-              <span className="badge badge-blue">{data.material}</span>
-              <span className="badge badge-green">{data.color}</span>
-              {data.subtype && <span className="badge badge-gold">{data.subtype}</span>}
+        <div className="grid-2" style={{ marginBottom:24, gap:16 }}>
+          <div className="glass" style={{ padding:24 }}>
+            <div style={{ fontSize:13, fontWeight:600, color:'var(--text2)', marginBottom:16, textTransform:'uppercase', letterSpacing:'0.05em' }}>📐 Specifications</div>
+            {[['Length',`${data.dimensions?.length} cm`],['Width',`${data.dimensions?.width} cm`],['Height',`${data.dimensions?.height} cm`],['Material',data.material],['Finish',data.color]].map(([k,v]) => (
+              <div key={k} style={{ display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid var(--border)', fontSize:14 }}>
+                <span style={{ color:'var(--text2)' }}>{k}</span><span style={{ fontWeight:600 }}>{v}</span>
+              </div>
+            ))}
+          </div>
+          <div className="glass" style={{ padding:24 }}>
+            <div style={{ fontSize:13, fontWeight:600, color:'var(--text2)', marginBottom:16, textTransform:'uppercase', letterSpacing:'0.05em' }}>💰 Cost Summary</div>
+            {[['Material',fmt(data.costs?.materialCost),'#7c5cfc'],['Cutting',fmt(data.costs?.cuttingCost),'#5b8af7'],['Fabrication',fmt(data.costs?.fabricationCost),'#38d9a9'],['Waste',fmt(data.costs?.wasteCost),'#f5c842']].map(([k,v,c]) => (
+              <div key={k} style={{ display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid var(--border)', fontSize:14 }}>
+                <span style={{ color:'var(--text2)' }}>{k}</span><span style={{ fontWeight:600, color:c }}>{v}</span>
+              </div>
+            ))}
+            <div style={{ display:'flex', justifyContent:'space-between', padding:'12px 0' }}>
+              <span style={{ fontWeight:700 }}>Total</span>
+              <span className="gradient-text" style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:800 }}>{fmt(data.costs?.total)}</span>
             </div>
           </div>
         </div>
-
-        {/* Specs grid */}
-        <div className="grid-2" style={{ marginBottom: 24, gap: 16 }}>
-          <div className="glass" style={{ padding: 24 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.05em' }}>📐 Specifications</div>
-            {[
-              ['Length', `${data.dimensions?.length} cm`],
-              ['Width', `${data.dimensions?.width} cm`],
-              ['Height', `${data.dimensions?.height} cm`],
-              ['Material', data.material],
-              ['Finish', data.color],
-              ['Theme', data.theme],
-            ].map(([k, v]) => (
-              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
-                <span style={{ color: 'var(--text2)' }}>{k}</span>
-                <span style={{ fontWeight: 600 }}>{v}</span>
-              </div>
-            ))}
-            {Object.entries(data.features || {}).filter(([, v]) => v).length > 0 && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: 14 }}>
-                <span style={{ color: 'var(--text2)' }}>Features</span>
-                <span style={{ fontWeight: 600, fontSize: 12 }}>
-                  {Object.entries(data.features || {}).filter(([, v]) => v).map(([k]) => k).join(', ')}
-                </span>
-              </div>
-            )}
-          </div>
-
-          <div className="glass" style={{ padding: 24 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.05em' }}>💰 Cost Summary</div>
-            {[
-              ['Material', fmt(data.costs?.materialCost), '#7c5cfc'],
-              ['Cutting', fmt(data.costs?.cuttingCost), '#5b8af7'],
-              ['Fabrication', fmt(data.costs?.fabricationCost), '#38d9a9'],
-              ['Waste', fmt(data.costs?.wasteCost), '#f5c842'],
-              ...(data.costs?.featureCost > 0 ? [['Features', fmt(data.costs?.featureCost), '#ff7eb3']] : []),
-            ].map(([k, v, c]) => (
-              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
-                <span style={{ color: 'var(--text2)' }}>{k}</span>
-                <span style={{ fontWeight: 600, color: c }}>{v}</span>
-              </div>
-            ))}
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', marginTop: 4 }}>
-              <span style={{ fontWeight: 700 }}>Total</span>
-              <span className="gradient-text" style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 800 }}>{fmt(data.costs?.total)}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Optimization result */}
         {opt && (
-          <div style={{
-            padding: 24,
-            background: 'linear-gradient(135deg, rgba(56,217,169,0.1), rgba(56,217,169,0.05))',
-            border: '1px solid rgba(56,217,169,0.3)',
-            borderRadius: 16,
-            display: 'flex',
-            gap: 16,
-            alignItems: 'center',
-            marginBottom: 40,
-            flexWrap: 'wrap',
-          }}>
-            <span style={{ fontSize: 36 }}>⚡</span>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 700, fontSize: 16, color: '#38d9a9' }}>
-                Waste reduced by {opt.saved}% — {fmt(opt.savedCost)} saved in material costs
-              </div>
-              <div style={{ fontSize: 14, color: 'var(--text2)', marginTop: 4 }}>
-                Optimized cutting layout generated for {opt.sheets} sheet(s) of {opt.sheetSize} standard sheets.
-              </div>
-            </div>
+          <div style={{ padding:24, background:'linear-gradient(135deg,rgba(56,217,169,0.1),rgba(56,217,169,0.05))', border:'1px solid rgba(56,217,169,0.3)', borderRadius:16, display:'flex', gap:16, alignItems:'center', marginBottom:40 }}>
+            <span style={{ fontSize:36 }}>⚡</span>
+            <div><div style={{ fontWeight:700, fontSize:16, color:'#38d9a9' }}>Waste reduced by {opt.saved}% — ₹{opt.savedCost.toLocaleString('en-IN')} saved</div><div style={{ fontSize:14, color:'var(--text2)', marginTop:4 }}>Optimized for {opt.sheets} sheet(s) of {opt.sheetSize}.</div></div>
           </div>
         )}
-
-        {/* Actions */}
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="btn-primary" onClick={handleDownload} style={{ minWidth: 200 }}>
-            {downloading ? '⏳ Generating...' : '⬇️ Download Summary'}
-          </button>
-          <button className="btn-secondary" onClick={onReset}>
-            🔄 Start New Design
-          </button>
-        </div>
-
-        <div style={{ textAlign: 'center', marginTop: 32, padding: 20, background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)' }}>
-          <p style={{ fontSize: 13, color: 'var(--text3)' }}>
-            ✦ This summary is AI-generated for estimation purposes. Final quote subject to on-site measurements and material availability.
-            Production time: <strong style={{ color: 'var(--text2)' }}>5–10 working days</strong>.
-          </p>
+        <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
+          <button className="btn-secondary" onClick={onReset}>🔄 Start New Design</button>
         </div>
       </div>
     </div>
   );
 }
 
-// ─── MAIN APP ─────────────────────────────────────────────────────────────────
+// ── MAIN APP ─────────────────────────────────────────────────────────────────
 function App() {
-  const [page, setPage] = useState('landing'); // landing, design
+  const [page, setPage] = useState('landing');
   const [step, setStep] = useState(0);
   const [designData, setDesignData] = useState({});
   const [toast, setToast] = useState(null);
 
-  const showToast = (message, type = 'success') => {
-    setToast({ message, type });
-  };
+  const showToast = (message, type='success') => setToast({ message, type });
 
-  const startDesign = () => {
-    setPage('design');
-    setStep(0);
-    setDesignData({});
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const startDesign = () => { setPage('design'); setStep(0); setDesignData({}); window.scrollTo({ top:0, behavior:'smooth' }); };
+  const reset = () => { setPage('landing'); setStep(0); setDesignData({}); window.scrollTo({ top:0, behavior:'smooth' }); };
+  const nextStep = (newData={}) => { setDesignData(prev => ({ ...prev,...newData })); setStep(s => s+1); window.scrollTo({ top:0, behavior:'smooth' }); showToast('Step complete! Moving forward ✦'); };
+  const prevStep = () => { setStep(s => Math.max(0,s-1)); window.scrollTo({ top:0, behavior:'smooth' }); };
 
-  const reset = () => {
-    setPage('landing');
-    setStep(0);
-    setDesignData({});
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const nextStep = (newData = {}) => {
-    setDesignData(prev => ({ ...prev, ...newData }));
-    setStep(s => s + 1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    showToast('Step complete! Moving forward ✦');
-  };
-
-  const prevStep = () => {
-    setStep(s => Math.max(0, s - 1));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const stepNames = ['Category', 'Customize', 'AI Design', 'Refine', 'Costs', 'Optimize', 'Summary'];
+  const stepNames = ['Category','Customize','AI Design','Refine','Costs','Optimize','Summary'];
 
   return (
     <div>
       <Navbar step={step} onReset={reset} />
-
-      {page === 'landing' ? (
+      {page==='landing' ? (
         <Landing onStart={startDesign} />
       ) : (
         <>
-          {/* Step header bar */}
-          <div style={{
-            position: 'fixed',
-            top: 70,
-            left: 0,
-            right: 0,
-            zIndex: 90,
-            background: 'rgba(9,9,15,0.95)',
-            backdropFilter: 'blur(10px)',
-            borderBottom: '1px solid var(--border)',
-            padding: '12px 0',
-          }}>
+          <div style={{ position:'fixed', top:70, left:0, right:0, zIndex:90, background:'rgba(9,9,15,0.95)', backdropFilter:'blur(10px)', borderBottom:'1px solid var(--border)', padding:'12px 0' }}>
             <div className="container">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, overflowX: 'auto' }}>
-                {stepNames.map((name, i) => (
+              <div style={{ display:'flex', alignItems:'center', gap:8, overflowX:'auto' }}>
+                {stepNames.map((name,i) => (
                   <React.Fragment key={i}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 6,
-                      padding: '4px 10px',
-                      borderRadius: 8,
-                      background: i === step ? 'rgba(124,92,252,0.15)' : 'transparent',
-                      flexShrink: 0,
-                    }}>
-                      <div style={{
-                        width: 20,
-                        height: 20,
-                        borderRadius: '50%',
-                        background: i < step ? 'var(--accent3)' : i === step ? 'var(--accent)' : 'var(--surface2)',
-                        border: `2px solid ${i < step ? 'var(--accent3)' : i === step ? 'var(--accent)' : 'var(--border2)'}`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: i <= step ? 'white' : 'var(--text3)',
-                      }}>
-                        {i < step ? '✓' : i + 1}
-                      </div>
-                      <span style={{ fontSize: 12, fontWeight: i === step ? 700 : 400, color: i === step ? 'var(--text)' : 'var(--text3)', whiteSpace: 'nowrap' }}>
-                        {name}
-                      </span>
+                    <div style={{ display:'flex', alignItems:'center', gap:6, padding:'4px 10px', borderRadius:8, background:i===step?'rgba(124,92,252,0.15)':'transparent', flexShrink:0 }}>
+                      <div style={{ width:20, height:20, borderRadius:'50%', background:i<step?'var(--accent3)':i===step?'var(--accent)':'var(--surface2)', border:`2px solid ${i<step?'var(--accent3)':i===step?'var(--accent)':'var(--border2)'}`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:700, color:i<=step?'white':'var(--text3)' }}>{i<step?'✓':i+1}</div>
+                      <span style={{ fontSize:12, fontWeight:i===step?700:400, color:i===step?'var(--text)':'var(--text3)', whiteSpace:'nowrap' }}>{name}</span>
                     </div>
-                    {i < stepNames.length - 1 && (
-                      <div style={{ height: 1, width: 20, background: i < step ? 'var(--accent3)' : 'var(--border)', flexShrink: 0 }} />
-                    )}
+                    {i<stepNames.length-1 && <div style={{ height:1, width:20, background:i<step?'var(--accent3)':'var(--border)', flexShrink:0 }} />}
                   </React.Fragment>
                 ))}
               </div>
             </div>
           </div>
-
-          <div style={{ paddingTop: 48 }}>
-            {step === 0 && <CategoryStep onNext={nextStep} data={designData} />}
-            {step === 1 && <CustomizationStep onNext={nextStep} onBack={prevStep} data={designData} />}
-            {step === 2 && <AIGenerationStep onNext={nextStep} onBack={prevStep} data={designData} />}
-            {step === 3 && <DesignCustomizationStep onNext={nextStep} onBack={prevStep} data={designData} />}
-            {step === 4 && <CostEstimationStep onNext={nextStep} onBack={prevStep} data={designData} />}
-            {step === 5 && <OptimizationStep onNext={nextStep} onBack={prevStep} data={designData} />}
-            {step === 6 && <FinalOutputStep data={designData} onReset={reset} />}
+          <div style={{ paddingTop:48 }}>
+            {step===0 && <CategoryStep onNext={nextStep} data={designData} />}
+            {step===1 && <CustomizationStep onNext={nextStep} onBack={prevStep} data={designData} />}
+            {step===2 && <AIGenerationStep onNext={nextStep} onBack={prevStep} data={designData} />}
+            {step===3 && <DesignCustomizationStep onNext={nextStep} onBack={prevStep} data={designData} />}
+            {step===4 && <CostEstimationStep onNext={nextStep} onBack={prevStep} data={designData} />}
+            {step===5 && <OptimizationStep onNext={nextStep} onBack={prevStep} data={designData} />}
+            {step===6 && <FinalOutputStep data={designData} onReset={reset} />}
           </div>
         </>
       )}
-
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
